@@ -49,7 +49,7 @@ export const createRegistration = async (req, res) => {
 
     try {
       const newPayment = new Payment({
-        registration: savedRegistration._id,
+        registrationId: savedRegistration._id,
         amount: amount || 1500,
         transactionId,
         screenshotUrl,
