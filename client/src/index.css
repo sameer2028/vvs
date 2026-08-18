@@ -1,0 +1,218 @@
+@import "tailwindcss";
+@source "../src";
+@source "../index.html";
+
+/* ======================================
+   VVS 2.0 — Design System
+   Light-first, institutional, premium
+   ====================================== */
+
+@theme {
+  /* Background */
+  --color-ivory: #FDFBF7;
+  --color-warm-white: #FAF8F4;
+  --color-surface: #F1F3F8;
+  
+  /* Primary — Deep Navy */
+  --color-navy: #1B2A4A;
+  --color-navy-light: #2C3E6B;
+  --color-navy-dark: #0F1A30;
+  
+  /* Accent — Muted Antique Gold */
+  --color-gold: #B8943E;
+  --color-gold-light: #D4B96A;
+  --color-gold-dark: #967628;
+  --color-gold-subtle: #F5EFD9;
+  
+  /* Secondary — Slate / Blue-gray */
+  --color-slate: #64748B;
+  --color-slate-light: #94A3B8;
+  --color-slate-dark: #475569;
+  
+  /* Neutral */
+  --color-border: #E8E5DF;
+  --color-border-light: #F0EDEA;
+  --color-charcoal: #2D3748;
+  
+  /* Status */
+  --color-success: #16A34A;
+  --color-success-light: #DCFCE7;
+  --color-warning: #D97706;
+  --color-warning-light: #FEF3C7;
+  --color-error: #DC2626;
+  --color-error-light: #FEE2E2;
+  --color-info: #2563EB;
+  --color-info-light: #DBEAFE;
+  
+  /* Typography */
+  --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(27, 42, 74, 0.06), 0 1px 2px rgba(27, 42, 74, 0.04);
+  --shadow-card-hover: 0 10px 25px rgba(27, 42, 74, 0.08), 0 4px 10px rgba(27, 42, 74, 0.04);
+  --shadow-elevated: 0 20px 40px rgba(27, 42, 74, 0.1), 0 8px 16px rgba(27, 42, 74, 0.06);
+  --shadow-navbar: 0 1px 3px rgba(27, 42, 74, 0.05);
+}
+
+/* ======================================
+   Base Styles
+   ====================================== */
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body, #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--color-navy);
+    background-color: var(--color-ivory);
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    line-height: 1.2;
+    color: var(--color-navy);
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+/* ======================================
+   Scrollbar Styling
+   ====================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-slate-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-slate);
+}
+
+/* ======================================
+   Selection
+   ====================================== */
+
+::selection {
+  background: var(--color-gold-subtle);
+  color: var(--color-navy);
+}
+
+/* ======================================
+   Focus States (Accessibility)
+   ====================================== */
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ======================================
+   Reduced Motion
+   ====================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ======================================
+   Utility Classes
+   ====================================== */
+
+.section-padding {
+  padding: 4rem 1rem;
+}
+@media (min-width: 640px) {
+  .section-padding { padding: 5rem 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .section-padding { padding: 6rem 2rem; }
+}
+
+.container-narrow {
+  max-width: 64rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-wide {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gold-line {
+  width: 60px;
+  height: 3px;
+  background: var(--color-gold);
+  border-radius: 2px;
+}
+
+.gold-line-center {
+  width: 60px;
+  height: 3px;
+  background: var(--color-gold);
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+/* Card hover effect */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+}

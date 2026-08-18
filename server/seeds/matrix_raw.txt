@@ -1,0 +1,442 @@
+AIPPM
+1 Narendra Modi
+2 Amit Shah
+3 Nitin Gadkari
+4 Rajnath Singh
+5 Smriti Irani
+6 Piyush Goyal
+7 Jyotiraditya Scindia
+8 Nirmala Sitharaman
+9 Mansukh Mandaviya
+10 Hardeep Singh Puri
+11 Kiren Rijiju
+12 Ashwini Vaishnaw
+13 Anurag Thakur
+14 Dharmendra Pradhan
+15 Bhupender Yadav
+16 Gajendra Singh Shekhawat
+17 Giriraj Singh
+18 Sarbananda Sonowal
+19 Arjun Ram Meghwal
+20 G. Kishan Reddy
+21 Pralhad Joshi
+22 Meenakshi Lekhi
+23 Jayant Sinha
+24 Sambit Patra
+25 Yogi Adityanath
+26 Manohar Lal Khattar
+27 Basavaraj Bommai
+28 Pramod Sawant
+29 N. Biren Singh
+30 Pushkar Singh Dhami
+31 UmeshBhai Patel
+32 Sushil Kumar Modi
+33 Ramesh Pokhriyal Nishank
+34 Prakash Javadekar
+35 Bhushan Sharan Singh
+36 Jagat Prakash Nadda
+37 Devendra Fadnavis
+38 K. S. Eshwarappa
+39 Subhash Chandra
+40 Shantanu Thakur
+41 S. S. Ahluwalia
+42 Neeraj Shekhar
+43 Himanta Biswa Sarma
+44 Arjun Khotkar
+45 Thawar Chand Gehlot
+46 Pratima Bhowmik
+47 K. S. Sudhakar
+48 Eknath Khadse
+49 Sanjay Jaiswal
+50 Anantkumar Hegde
+51 Ramapati Ram Tripathi
+52 Locket Chatterjee
+53 Shahnawaz Hussain
+54 Arvind Kejriwal
+55 Bhagwant Mann
+56 Raghav Chadha
+57 Dimple Yadav
+58 Asaduddin Owaisi
+59 Naveen Patnaik
+60 Prahalad Joshi
+61 K. Chandrasekhar Rao
+62 Pinarayi Vijayan
+63 M. K. Stalin
+64 Kanimozhi
+65 Rahul Gandhi
+66 Shashi Tharoor
+67 Mallikarjun Kharge
+68 Adhir Ranjan Chowdhury
+69 Navjot Singh Sidhu
+70 Bhupesh Baghel
+71 Priyanka Gandhi
+72 Ram Mohan Naik
+73 Ranjit Singh
+74 Abhishek Manu Singhvi
+75 Gaurav Gogoi
+76 Ghulam Nabi Azad
+77 Karan Singh Tanwar
+78 Mukesh Agarwal
+79 K. C. Venugopal
+80 Ashok Tanwar
+81 Nitish Kumar
+82 Hemant Soren
+83 Chirag Paswan
+84 Shambhavi choudhary
+85 Zoramthanga
+86 Supriya Sule
+87 Sharad Pawar
+88 Nitin A. G. D. Sawant
+89 Sebastian Paul
+90 Conrad Sangma
+91 Tejashwi Yadav
+92 Ramdas Athawale
+93 Arvind Sawant
+94 Uddhav Thackeray
+95 Eknath Shinde
+96 Akhilesh Yadav
+97 Prakash Singh Baghel
+98 Avadhesh Singh
+99 Mahua Moitra
+100 Dinesh Trivedi
+101 Md. Haneefa
+102 Chandrashekhar Azad Ravan
+103 Richard V
+104 Kapil Sibal
+
+UNCSW
+Cabo Verde
+Côte d’Ivoire
+Democratic Republic of the Congo
+Ethiopia
+Gabon
+Mali
+Morocco
+Mozambique
+Nigeria
+Rwanda
+South Africa
+United Republic of Tanzania
+Zimbabwe
+Bangladesh
+China
+India
+Japan
+Maldives
+Mongolia
+Philippines
+Qatar
+Republic of Korea
+Saudi Arabia
+Sri Lanka
+Czechia
+Lithuania
+Romania
+Ukraine
+Belize
+Bolivia
+Brazil
+Chile
+Colombia
+Cuba
+Dominican Republic
+Mexico
+Uruguay
+Belgium
+Italy
+Liechtenstein
+Netherlands
+Portugal
+Spain
+United Kingdom
+United States
+
+LOK SABHA
+1 Narendra Modi
+2 Rajnath Singh
+3 Rahul Gandhi
+4 Nitin Gadkari
+5 Giriraj Singh
+6 Dharmendra Yadav
+7 Shashi Tharoor
+8 Tejasvi Surya
+9 Mahua Moitra
+10 Anurag Thakur
+11 Hema Malini
+12 Ravi Kishan
+13 Supriya Sule
+14 Chirag Paswan
+15 Asaduddin Owaisi
+16 Rajesh Ranjan
+17 Deepender Hooda
+18 Kangana Ranaut
+19 Sarbananda Sonowal
+20 Piyush Goyal
+21 Sadhvi Niranjan Jyoti
+22 Abhishek Bannerjee
+23 Manoj Tiwari
+24 Akhilesh Yadav
+25 Kanimozhi
+26 Satish Kumar Gautam
+27 Dushyant Kumar Gautam
+28 Pushpendra Saroj
+29 Poonam Mahajan
+30 Raksha Khadse
+31 Shambhavi Choudhary
+32 Sanjay Jha
+33 Saayoni Ghosh
+34 Shatrughan Sinha
+35 Prahlad Joshi
+36 Aparajita Sarangi
+37 Annapurna Devi
+38 Bandi Sanjay Kumar
+39 Ranjith Reddy
+40 Gaurav Gogoi
+41 Kaushal Kishore
+42 Dimple yadav
+43 Ramesh Awasthi
+44 Iqra Hasan
+45 Ram Shiromani Verma
+46 Anand Bhadauria
+47 Tanuj Punia
+48 Navneet Kaur Rana
+49 Sanjay Raut
+50 Nishikant Dubey
+51 Ravi Shankar Prasad
+52 Ajay Nishad
+53 Kalyan Banerjee
+54 Pratima Mondal
+55 Satabdi Roy
+56 Jyotiraditya Scindia
+57 Ashwini Vaishnaw
+58 A. RAJA
+59 John Brittas
+60 Karti Chidambaram
+61 Pradyut Bordoloi
+62 Malla Reddy
+63 Shobha Karandlaje
+64 Hemant Savara
+65 Shobha Bachhav
+66 Arvind Sawant
+67 Sudhakar Singh
+68 Rohini Acharya
+69 Janardan Singh Sigriwal
+70 Radha Mohan Singh
+71 Nisith Pramanik
+72 Jagannath Sarkar
+73 Yaduveer Krishnadatta
+74 PC Mohan
+75 Basavaraj Bommai
+76 Captain Brijesh Chowta
+77 Geetha Kothapalli
+78 Babu Singh Kushwaha
+79 C.M. Ramesh
+80 Lavu Sri Krishna Devarayalu
+81 Utkarsh Verma
+82 Md. Haneefa
+83 Ritesh Pandey
+84 Lallu Singh
+85 Upendra Singh Rawat
+86 Neeraj Tripathi
+87 Salik Ram
+88 Kunvar Danish Ali
+89 Prataprao Jadhao
+90 Amra Ram
+91 Shashikant Shinde
+92 Kapil Patil
+93 Sumalatha Ambareesh
+94 Debashree Chowdhury
+95 Manickam Tagore
+96 Rajendra Agrawal
+97 Bhartruhari Mahtab
+98 Awadhesh Prasad
+99 Balwant Baswant Wankhade
+100 Shri Patel Umeshbhai
+101 P.V. Midhun Reddy
+102 Chandrashekhar Azad ravan
+103 Virendra Singh
+104 Richard V
+105 Amit Shah
+
+UPLA
+1 Dr. Sunil Patel
+2 Dr. Surabhi
+3 Dr. Rashmi Arya
+4 Umashankar Singh
+5 Yogi Adityanath
+6 Brajesh Pathak
+7 Dr. Awadhesh Singh
+8 Dr. Neelkanth Tiwari
+9 Dr. Neeraj Bora
+10 Prof. Shyam Bihari Lal
+11 Ajit Singh Pal
+12 Amit Agarwal
+13 Anil Rajbhar
+14 Ankur Tiwari
+15 Anurag Singh
+16 Ashutosh Shukla
+17 Ashutosh Tandon 'Gopal Ji'
+18 Atul Garg
+19 Brajesh Kumar
+20 Brijbhushan Rajput
+21 Chhotey Lal Verma
+22 Daya Shankar Singh
+23 Dharmpal Singh
+25 Dinesh Kumar
+26 Girish Chandra Yadav
+27 Hari Prakash Verma
+28 Jai Prakash Nishad
+29 Jai Pratap Singh
+30 Jaiveer Singh
+31 Jayveer Singh
+32 Kailash
+33 Kapil Dev Agarwal
+34 Krishan Pal Malik
+35 Manish Rawat
+36 Nand Gopal Gupta "Nandi"
+37 Nandkishor
+38 Neel Ratan Singh
+39 Pankaj Singh
+40 Piyush Ranjan Nishad
+41 Prateek Bhushan Singh
+42 Praveen Patel
+43 Raj Prasad Upadhyay
+44 Ramesh Jaiswal
+45 Rampal Verma
+46 Ratnakar Mishra
+47 Ravi Sharma
+48 Ravindra Jaiswal
+49 Sanjay Singh Gangwar
+50 Saurabh Srivastava
+51 Shalabh Mani Tripathi
+52 Shashank Trivedi
+53 kant Katiyar
+54 kant Sharma
+55 Shushil Singh
+56 Suresh Kumar Khanna
+57 Suresh Rahi
+58 Tribhuwan Ram
+59 Ved Prakash Gupta
+60 Yogendra Upadhyaya
+61 Yogesh Dhama
+62 Yogesh Shukla
+63 Yogesh Verma
+64 Aditi Singh
+65 Anjula Singh Mahaur
+66 Neelima Katiyar
+67 Ketakee Singh
+68 Aradhana Mishra, Mona
+69 Virendra Chaudhary
+70 Raghuraj Pratap Singh
+71 Ramesh Singh
+72 Pradeep Kumar Singh
+73 Anil Kumar
+74 Shivpal Singh Yadav
+75 Dr. Pallavi Patel
+76 Dr. Ragini
+77 Dr. Rakesh Kumar Verma Alias
+78 Atul Pradhan
+79 Durga Prasad Yadav
+80 Indrajeet Saroj
+81 Jai Prakash Anchal
+82 Prabhu Narayan Yadav
+83 Brajesh Yadav
+84 Dara Singh Chauhan
+85 Dharmraj Singh Yadav
+86 Jaikishan Sahu
+87 Kamal Akhtar
+88 Kavindra Chaudhary
+89 Mahendra Nath Yadav
+90 Mata Prasad Pandey
+91 Mehboob Ali
+92 Nafees Ahmad
+93 Naseer Ahmad Khan
+94 Om Prakash
+95 Suhaib Alias Mannu Ansari
+96 Tufani Saroj
+97 Shyam Sunder
+98 Rafiq Ansari
+99 Ravidas Mehrotra
+100 Om Prakash Rajbhar
+101 Mahesh Trivedi
+
+UNHRC
+Algeria
+Angola
+Benin
+Burundi
+Côte d'Ivoire
+DR Congo
+Egypt
+Ethiopia
+Gambia
+Ghana
+Kenya
+Mauritius
+South Africa
+Bangladesh
+China
+India
+Indonesia
+Iraq
+Japan
+Kuwait
+Kyrgyzstan
+Maldives
+Marshall Islands
+Pakistan
+Qatar
+Vietnam
+Albania
+Bulgaria
+Cyprus
+Czechia
+Estonia
+Slovenia
+Bolivia
+Brazil
+Chile
+Colombia
+Cuba
+Dominican Republic
+Ecuador
+Mexico
+Belgium
+France
+Iceland
+Italy
+Netherlands
+Spain
+United Kingdom
+
+PRESS CONCLAVE
+1 Rajdeep Sardesai
+2 Sudhir Chaudhary
+3 Anjana Om Kashyap
+4 Rubika Liyaquat
+5 Arnab Goswami
+6 Rahul Kanwal
+7 Gaurav Sawant
+8 Navika Kumar
+9 Shiv Aroor
+10 Palki Sharma
+11 Barkha Dutt
+12 Ravish Kumar
+13 Faye D'Souza
+14 N. Ram
+15 Shekhar Gupta
+16 Siddharth Varadarajan
+17 Praveen Swami
+18 M. K. Venu
+19 S. Nihal Singh
+20 Sucheta Dalal
+21 Josy Joseph
+22 Sreenivasan Jain
+23 Neha Dixit
+24 Sagarika Ghose
+25 Nidhi Razdan
+26 Photography
+27 Photography
+28 Photography
+29 Photography
+30 Photography
