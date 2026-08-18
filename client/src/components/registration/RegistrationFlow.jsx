@@ -47,8 +47,8 @@ export default function RegistrationFlow() {
     const fetchInitialData = async () => {
       try {
         const [comRes, setRes] = await Promise.all([
-          fetch('/api/committees'),
-          fetch('/api/settings')
+          fetch(`${import.meta.env.VITE_API_URL || ''}/api/committees`),
+          fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`)
         ]);
         
         const comData = await comRes.json();
@@ -73,7 +73,7 @@ export default function RegistrationFlow() {
         return;
       }
       try {
-        const response = await fetch(`/api/portfolios?committeeId=${committeeId}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/portfolios?committeeId=${committeeId}`);
         const data = await response.json();
         setter(data);
       } catch (error) {
@@ -91,7 +91,7 @@ export default function RegistrationFlow() {
         return;
       }
       try {
-        const response = await fetch(`/api/portfolios?committeeId=${committeeId}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/portfolios?committeeId=${committeeId}`);
         const data = await response.json();
         setter(data);
       } catch (error) {
@@ -192,7 +192,7 @@ export default function RegistrationFlow() {
         amount: 1500 // Or get from settings
       };
 
-      const regResponse = await fetch('/api/registrations', {
+      const regResponse = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/registrations`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -225,7 +225,7 @@ export default function RegistrationFlow() {
     formData.append('image', file);
 
     try {
-      const response = await fetch('/api/upload/public', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/upload/public`, {
         method: 'POST',
         body: formData
       });

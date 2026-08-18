@@ -51,7 +51,7 @@ export default function FaqPage() {
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
-        const response = await fetch('/api/settings');
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`);
         const data = await response.json();
         // Sort by order if available
         const sortedFaqs = (data.faqs || []).sort((a, b) => (a.order || 0) - (b.order || 0));

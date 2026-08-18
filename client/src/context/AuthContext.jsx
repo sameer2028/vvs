@@ -29,7 +29,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('vvs_admin');
-    fetch('/api/auth/admin/logout', { method: 'POST' }).catch(err => console.error(err));
+    fetch(`${import.meta.env.VITE_API_URL || ''}/api/auth/admin/logout`, { method: 'POST' }).catch(err => console.error(err));
   };
 
   // Delegate login/logout
@@ -41,7 +41,7 @@ export function AuthProvider({ children }) {
   const delegateLogout = () => {
     setDelegate(null);
     localStorage.removeItem('vvs_delegate');
-    fetch('/api/auth/delegate/logout', { method: 'POST' }).catch(err => console.error(err));
+    fetch(`${import.meta.env.VITE_API_URL || ''}/api/auth/delegate/logout`, { method: 'POST' }).catch(err => console.error(err));
   };
 
   return (

@@ -21,7 +21,7 @@ export default function CommitteesManager() {
 
   const fetchCommittees = async () => {
     try {
-      const response = await fetch('/api/committees');
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/committees`);
       if (!response.ok) throw new Error('Failed to fetch committees');
       const data = await response.json();
       setCommittees(data);
@@ -104,7 +104,7 @@ export default function CommitteesManager() {
     }
 
     try {
-      const response = await fetch(`/api/committees/${id}`, { method: 'DELETE' });
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/committees/${id}`, { method: 'DELETE' });
       if (!response.ok) throw new Error('Failed to delete committee');
       setCommittees(committees.filter(c => c._id !== id));
     } catch (err) {

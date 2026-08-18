@@ -14,7 +14,7 @@ export default function SettingsManager() {
 
   const fetchSettings = async () => {
     try {
-      const response = await fetch('/api/settings');
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`);
       if (!response.ok) throw new Error('Failed to fetch settings');
       const data = await response.json();
       
@@ -34,7 +34,7 @@ export default function SettingsManager() {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      const response = await fetch('/api/settings', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(settings)
@@ -101,7 +101,7 @@ export default function SettingsManager() {
 
     try {
       // Assuming Admin authentication JWT is handled by the browser/proxy automatically
-      const response = await fetch('/api/upload', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/upload`, {
         method: 'POST',
         body: formData
       });

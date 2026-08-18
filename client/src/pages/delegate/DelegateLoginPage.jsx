@@ -19,7 +19,7 @@ export default function DelegateLoginPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/delegate/login', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/auth/delegate/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

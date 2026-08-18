@@ -84,7 +84,7 @@ export default function DelegateDashboard() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch('/api/delegate/me');
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/delegate/me`);
         if (!response.ok) throw new Error('Failed to fetch profile');
         const result = await response.json();
         setData(result);

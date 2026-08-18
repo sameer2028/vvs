@@ -10,7 +10,7 @@ export default function RegistrationsManager() {
   useEffect(() => {
     const fetchRegistrations = async () => {
       try {
-        const response = await fetch('/api/admin/registrations');
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/registrations`);
         if (!response.ok) throw new Error('Failed to fetch registrations');
         const data = await response.json();
         setRegistrations(data);
