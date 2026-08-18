@@ -14,8 +14,9 @@ const app = express();
 
 // Security and utility middleware
 app.use(helmet());
+const clientUrl = (process.env.CLIENT_URL || 'http://localhost:5174').replace(/\/$/, '');
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5174',
+  origin: clientUrl,
   credentials: true
 }));
 app.use(express.json());
