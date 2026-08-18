@@ -186,38 +186,38 @@ export default function SettingsManager() {
       {error && <div className="p-4 bg-error/10 text-error rounded-xl">{error}</div>}
 
       <div className="bg-white rounded-xl border border-border overflow-hidden shadow-sm">
-        <div className="flex border-b border-border bg-surface">
+        <div className="flex border-b border-border bg-surface overflow-x-auto whitespace-nowrap scrollbar-hide">
           <button 
             onClick={() => setActiveTab('general')}
-            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors ${activeTab === 'general' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
+            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors shrink-0 ${activeTab === 'general' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
           >
             <Settings size={16} />
             General Settings
           </button>
           <button 
             onClick={() => setActiveTab('faqs')}
-            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors ${activeTab === 'faqs' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
+            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors shrink-0 ${activeTab === 'faqs' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
           >
             <MessageCircleQuestion size={16} />
             FAQs
           </button>
           <button 
             onClick={() => setActiveTab('announcements')}
-            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors ${activeTab === 'announcements' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
+            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors shrink-0 ${activeTab === 'announcements' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
           >
             <Bell size={16} />
             Announcements
           </button>
           <button 
             onClick={() => setActiveTab('team')}
-            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors ${activeTab === 'team' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
+            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors shrink-0 ${activeTab === 'team' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
           >
             <Users size={16} />
             Team & Guests
           </button>
           <button 
             onClick={() => setActiveTab('gallery')}
-            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors ${activeTab === 'gallery' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
+            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors shrink-0 ${activeTab === 'gallery' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
           >
             <ImageIcon size={16} />
             Gallery
