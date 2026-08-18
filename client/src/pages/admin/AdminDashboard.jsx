@@ -18,7 +18,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/dashboard`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/dashboard`, { credentials: 'include',  credentials: 'include' });
         if (!response.ok) throw new Error('Failed to fetch dashboard stats');
         const data = await response.json();
         setStats(data);

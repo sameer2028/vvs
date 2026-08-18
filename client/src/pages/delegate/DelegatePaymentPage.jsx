@@ -18,7 +18,7 @@ export default function DelegatePaymentPage() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include',  credentials: 'include' });
         const data = await response.json();
         setSettings(data);
       } catch (err) {
@@ -45,7 +45,7 @@ export default function DelegatePaymentPage() {
     formData.append('image', file);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/upload/payment`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/upload/payment`, { credentials: 'include', 
         method: 'POST',
         body: formData
       });
@@ -70,7 +70,7 @@ export default function DelegatePaymentPage() {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/payments`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/payments`, { credentials: 'include', 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

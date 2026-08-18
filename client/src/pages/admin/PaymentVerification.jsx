@@ -12,7 +12,7 @@ export default function PaymentVerification() {
 
   const fetchPendingPayments = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/payments/pending`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/payments/pending`, { credentials: 'include',  credentials: 'include' });
       if (!response.ok) throw new Error('Failed to fetch pending payments');
       const data = await response.json();
       setPayments(data);
@@ -25,7 +25,7 @@ export default function PaymentVerification() {
 
   const handleVerify = async (paymentId, status) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/payments/${paymentId}/verify`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/payments/${paymentId}/verify`, { credentials: 'include', 
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status, rejectionReason: status === 'rejected' ? 'Invalid screenshot or transaction ID' : '' })

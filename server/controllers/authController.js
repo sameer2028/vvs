@@ -27,8 +27,8 @@ export const adminLogin = async (req, res) => {
       const token = generateToken(admin._id, admin.role);
       res.cookie('admin_token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        secure: true,
+        sameSite: 'none',
         maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
       });
 
@@ -63,8 +63,8 @@ export const delegateLogin = async (req, res) => {
       const token = generateToken(registration._id, 'delegate');
       res.cookie('delegate_token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        secure: true,
+        sameSite: 'none',
         maxAge: 30 * 24 * 60 * 60 * 1000
       });
 
@@ -89,7 +89,7 @@ export const delegateLogin = async (req, res) => {
 // @route   POST /api/auth/admin/logout
 // @access  Public
 export const adminLogout = (req, res) => {
-  res.cookie('admin_token', '', { httpOnly: true, expires: new Date(0) });
+  res.cookie('admin_token', '', { httpOnly: true, secure: true, sameSite: 'none', expires: new Date(0) });
   res.status(200).json({ message: 'Admin logged out successfully' });
 };
 
@@ -97,7 +97,7 @@ export const adminLogout = (req, res) => {
 // @route   POST /api/auth/delegate/logout
 // @access  Public
 export const delegateLogout = (req, res) => {
-  res.cookie('delegate_token', '', { httpOnly: true, expires: new Date(0) });
+  res.cookie('delegate_token', '', { httpOnly: true, secure: true, sameSite: 'none', expires: new Date(0) });
   res.status(200).json({ message: 'Delegate logged out successfully' });
 };
 

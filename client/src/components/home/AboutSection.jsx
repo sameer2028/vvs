@@ -16,7 +16,7 @@ export default function AboutSection() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include',  credentials: 'include' });
         const data = await response.json();
         if (data.aboutImage) {
           setAboutImage(data.aboutImage);

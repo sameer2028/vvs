@@ -10,7 +10,7 @@ export default function GuestPreview() {
   useEffect(() => {
     const fetchGuests = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include',  credentials: 'include' });
         const data = await response.json();
         
         // Filter for guests and sort by order

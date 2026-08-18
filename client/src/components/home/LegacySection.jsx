@@ -9,7 +9,7 @@ export default function LegacySection() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include',  credentials: 'include' });
         const data = await response.json();
         // Get the first 4 gallery images
         const sortedGallery = (data.gallery || []).sort((a, b) => (a.order || 0) - (b.order || 0));
