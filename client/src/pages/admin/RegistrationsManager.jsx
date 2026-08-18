@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Search, Filter, Eye, Download } from 'lucide-react';
+import { Search, Filter, Eye, Download, X } from 'lucide-react';
 
 export default function RegistrationsManager() {
   const [registrations, setRegistrations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedReg, setSelectedReg] = useState(null);
 
   useEffect(() => {
     const fetchRegistrations = async () => {
@@ -137,7 +138,10 @@ export default function RegistrationsManager() {
                         {reg.committeePref1?.name || 'N/A'}
                       </td>
                       <td className="px-5 py-4 text-right">
-                        <button className="p-2 text-slate hover:text-navy bg-surface hover:bg-border rounded-lg transition-colors">
+                        <button 
+                          onClick={() => setSelectedReg(reg)}
+                          className="p-2 text-slate hover:text-navy bg-surface hover:bg-border rounded-lg transition-colors"
+                        >
                           <Eye size={16} />
                         </button>
                       </td>
@@ -149,6 +153,141 @@ export default function RegistrationsManager() {
           </div>
         )}
       </div>
+
+      {/* Registration Details Modal */}
+      {selectedReg && (
+        <div className="fixed inset-0 bg-navy/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 border-b border-border">
+              <div>
+                <h2 className="text-2xl font-bold text-navy" style={{ fontFamily: 'var(--font-heading)' }}>
+                  Registration Details
+                </h2>
+                <p className="text-slate text-sm">ID: {selectedReg.registrationId}</p>
+              </div>
+              <button 
+                onClick={() => setSelectedReg(null)}
+                className="p-2 text-slate hover:text-navy hover:bg-surface rounded-full transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 overflow-y-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Personal Info */}
+                <div className="space-y-4">
+                  <h3 className="font-bold text-navy uppercase tracking-wider text-sm pb-2 border-b border-border">Personal Information</h3>
+                  <div className="grid grid-cols-3 gap-2">
+                    <span className="text-slate text-sm">Full Name:</span>
+                    <span className="col-span-2 font-medium">{selectedReg.fullName}</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <span className="text-slate text-sm">Email:</span>
+                    <span className="col-span-2 font-medium">{selectedReg.email}</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <span className="text-slate text-sm">Phone:</span>
+                    <span className="col-span-2 font-medium">{selectedReg.phoneNumber}</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <span className="text-slate text-sm">Institution:</span>
+                    <span className="col-span-2 font-medium">{selectedReg.institution}</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <span className="text-slate text-sm">Gender:</span>
+                    <span className="col-span-2 font-medium">{selectedReg.gender}</span>
+                  </div>
+                </div>
+
+                {/* Status & Accommodation */}
+                <div className="space-y-4">
+                  <h3 className="font-bold text-navy uppercase tracking-wider text-sm pb-2 border-b border-border">Status</h3>
+                  <div className="grid grid-cols-3 gap-2 items-center">
+                    <span className="text-slate text-sm">Status:</span>
+                    <span className="col-span-2">
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        selectedReg.status === 'payment_verified' ? 'bg-success/10 text-success' :
+                        selectedReg.status === 'payment_pending' ? 'bg-warning/10 text-warning' :
+                        selectedReg.status === 'payment_rejected' ? 'bg-error/10 text-error' :
+                        'bg-slate/10 text-slate-dark'
+                      }`}>
+                        {selectedReg.status.replace('_', ' ')}
+                      </span>
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 items-center">
+                    <span className="text-slate text-sm">Role:</span>
+                    <span className="col-span-2">
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-gold/20 text-navy">
+                        {selectedReg.allottedRole ? 'Allocated' : 'Pending Allocation'}
+                      </span>
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <span className="text-slate text-sm">Accommodation:</span>
+                    <span className="col-span-2 font-medium">{selectedReg.accommodationRequired ? 'Yes' : 'No'}</span>
+                  </div>
+                </div>
+
+                {/* Preferences */}
+                <div className="col-span-1 md:col-span-2 space-y-4">
+                  <h3 className="font-bold text-navy uppercase tracking-wider text-sm pb-2 border-b border-border">Committee & Portfolio Preferences</h3>
+                  
+                  <div className="bg-surface/50 p-4 rounded-xl border border-border">
+                    <p className="text-xs text-slate uppercase font-bold mb-2">Preference 1</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <span className="text-slate text-sm block">Committee:</span>
+                        <span className="font-medium">{selectedReg.committeePref1?.name || 'N/A'}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate text-sm block">Portfolio:</span>
+                        <span className="font-medium">{selectedReg.portfolioPref1Comm1?.name || 'N/A'}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-surface/50 p-4 rounded-xl border border-border">
+                    <p className="text-xs text-slate uppercase font-bold mb-2">Preference 2</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <span className="text-slate text-sm block">Committee:</span>
+                        <span className="font-medium">{selectedReg.committeePref2?.name || 'N/A'}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate text-sm block">Portfolio:</span>
+                        <span className="font-medium">{selectedReg.portfolioPref1Comm2?.name || 'N/A'}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* MUN Experience */}
+                <div className="col-span-1 md:col-span-2 space-y-4">
+                  <h3 className="font-bold text-navy uppercase tracking-wider text-sm pb-2 border-b border-border">MUN Experience</h3>
+                  <div className="bg-surface/50 p-4 rounded-xl border border-border">
+                    <p className="text-sm whitespace-pre-wrap">{selectedReg.pastExperience || 'No past experience provided.'}</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            
+            {/* Modal Footer */}
+            <div className="p-6 border-t border-border bg-surface/30 flex justify-end">
+              <button 
+                onClick={() => setSelectedReg(null)}
+                className="px-6 py-2 bg-navy text-white rounded-lg hover:bg-navy-light transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
