@@ -27,11 +27,19 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('✅ MongoDB connected'))
   .catch(err => console.error('❌ MongoDB connection error:', err));
 
-// Health check route (GET and HEAD)
+// Health check routes (GET and HEAD)
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'VVS 2.0 API is running' });
 });
 app.head('/api/health', (req, res) => {
+  res.status(200).end();
+});
+
+// Top-level health check for Render
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+app.head('/health', (req, res) => {
   res.status(200).end();
 });
 
