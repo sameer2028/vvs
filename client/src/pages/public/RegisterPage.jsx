@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import RegistrationFlow from '../../components/registration/RegistrationFlow';
 
 export default function RegisterPage() {
   return (
@@ -27,21 +26,33 @@ export default function RegisterPage() {
             </p>
             <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
               <div className="w-16 h-[3px] bg-gold rounded-full hidden sm:block" />
-              <Link 
-                to="/delegate/login"
-                className="inline-flex items-center gap-2 px-6 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-medium rounded-full transition-all backdrop-blur-sm"
-              >
-                Already registered? Login to Delegate Portal
-              </Link>
               <div className="w-16 h-[3px] bg-gold rounded-full hidden sm:block" />
             </div>
           </motion.div>
         </div>
       </section>
 
-      <section className="section-padding bg-ivory min-h-screen">
-        <div className="container-wide mx-auto px-4 sm:px-6 lg:px-8">
-          <RegistrationFlow />
+      <section className="section-padding bg-ivory min-h-[50vh] flex items-center justify-center">
+        <div className="container-wide mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-xl mx-auto bg-white p-8 sm:p-12 rounded-2xl shadow-xl border border-navy/5">
+            <h2 className="text-2xl sm:text-3xl font-bold text-navy mb-4" style={{ fontFamily: 'var(--font-heading)' }}>
+              Delegate Registration
+            </h2>
+            <p className="text-gray-600 mb-8 text-lg">
+              Click the button below to fill out the official registration form and secure your spot at VVS 2.0.
+            </p>
+            <a 
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfYvqGHp7Q5H6o-G_IMFGFFsOFPykCfn5F1Jwn6Xe0Rjyfiqg/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#D4AF37] hover:brightness-110 text-navy font-bold text-lg rounded-full transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 w-full sm:w-auto"
+            >
+              Register Here
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
         </div>
       </section>
     </div>

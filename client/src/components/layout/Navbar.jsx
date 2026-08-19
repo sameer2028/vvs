@@ -75,14 +75,7 @@ export default function Navbar() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
-            <Link
-              to="/delegate/login"
-              id="nav-delegate-login"
-              className="px-4 py-2.5 text-sm font-semibold text-navy border border-border rounded-lg
-                hover:bg-surface transition-all duration-200"
-            >
-              Delegate Login
-            </Link>
+
             <Link
               to="/register"
               id="nav-register-btn"
@@ -134,13 +127,7 @@ export default function Navbar() {
                 </NavLink>
               ))}
               <div className="pt-3 border-t border-border mt-3 space-y-2">
-                <Link
-                  to="/delegate/login"
-                  className="block w-full text-center px-6 py-3 text-navy border border-border text-sm font-semibold rounded-lg
-                    hover:bg-surface transition-all duration-200"
-                >
-                  Delegate Login
-                </Link>
+
                 <Link
                   to="/register"
                   className="block w-full text-center px-6 py-3 bg-navy text-white text-sm font-semibold rounded-lg
