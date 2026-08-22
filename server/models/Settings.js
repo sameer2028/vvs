@@ -1,31 +1,32 @@
 import mongoose from 'mongoose';
 
 const faqSchema = new mongoose.Schema({
-  question: { type: String, required: true },
-  answer: { type: String, required: true },
+  question: { type: String, default: '' },
+  answer: { type: String, default: '' },
   order: { type: Number, default: 0 }
 });
 
 const announcementSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  content: { type: String, required: true },
+  title: { type: String, default: '' },
+  content: { type: String, default: '' },
   isActive: { type: Boolean, default: true },
   date: { type: Date, default: Date.now }
 });
 
 const teamMemberSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  role: { type: String, required: true }, // e.g. "President", "Chief Guest"
+  name: { type: String, default: '' },
+  role: { type: String, default: '' }, // e.g. "President", "Chief Guest"
   type: { type: String, enum: ['team', 'guest'], default: 'team' },
-  imageUrl: { type: String, required: true },
-  linkedin: { type: String },
+  imageUrl: { type: String, default: '' },
+  linkedin: { type: String, default: '' },
   order: { type: Number, default: 0 }
 });
 
 const gallerySchema = new mongoose.Schema({
-  imageUrl: { type: String, required: true },
-  caption: { type: String },
-  order: { type: Number, default: 0 }
+  imageUrl: { type: String, default: '' },
+  caption: { type: String, default: '' },
+  order: { type: Number, default: 0 },
+  showOnHomepage: { type: Boolean, default: true }
 });
 
 const settingsSchema = new mongoose.Schema({

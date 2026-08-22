@@ -84,8 +84,8 @@ export default function GalleryPage() {
                     <img src={img.imageUrl} alt={img.caption || `VVS 1.0 Photo ${i + 1}`} className="w-full h-full object-cover" />
                     
                     {img.caption && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-navy/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
-                        <p className="text-white text-sm font-medium">{img.caption}</p>
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy/90 via-navy/50 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3 sm:p-4">
+                        <p className="text-white text-xs sm:text-sm font-medium leading-snug line-clamp-2">{img.caption}</p>
                       </div>
                     )}
                   </motion.div>

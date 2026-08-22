@@ -24,11 +24,12 @@ export const adminLogin = async (req, res) => {
       }
 
       // Set cookie
+      const isProd = process.env.NODE_ENV === 'production';
       const token = generateToken(admin._id, admin.role);
       res.cookie('admin_token', token, {
         httpOnly: true,
-        secure: true,
-        sameSite: 'none',
+        secure: isProd,
+        sameSite: isProd ? 'none' : 'lax',
         maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
       });
 
@@ -60,11 +61,12 @@ export const delegateLogin = async (req, res) => {
 
     if (registration && (await bcrypt.compare(password, registration.password))) {
       // Delegate token
+      const isProd = process.env.NODE_ENV === 'production';
       const token = generateToken(registration._id, 'delegate');
       res.cookie('delegate_token', token, {
         httpOnly: true,
-        secure: true,
-        sameSite: 'none',
+        secure: isProd,
+        sameSite: isProd ? 'none' : 'lax',
         maxAge: 30 * 24 * 60 * 60 * 1000
       });
 
@@ -89,7 +91,8 @@ export const delegateLogin = async (req, res) => {
 // @route   POST /api/auth/admin/logout
 // @access  Public
 export const adminLogout = (req, res) => {
-  res.cookie('admin_token', '', { httpOnly: true, secure: true, sameSite: 'none', expires: new Date(0) });
+  const isProd = process.env.NODE_ENV === 'production';
+  res.cookie('admin_token', '', { httpOnly: true, secure: isProd, sameSite: isProd ? 'none' : 'lax', expires: new Date(0) });
   res.status(200).json({ message: 'Admin logged out successfully' });
 };
 
@@ -97,7 +100,8 @@ export const adminLogout = (req, res) => {
 // @route   POST /api/auth/delegate/logout
 // @access  Public
 export const delegateLogout = (req, res) => {
-  res.cookie('delegate_token', '', { httpOnly: true, secure: true, sameSite: 'none', expires: new Date(0) });
+  const isProd = process.env.NODE_ENV === 'production';
+  res.cookie('delegate_token', '', { httpOnly: true, secure: isProd, sameSite: isProd ? 'none' : 'lax', expires: new Date(0) });
   res.status(200).json({ message: 'Delegate logged out successfully' });
 };
 

@@ -16,9 +16,9 @@ const app = express();
 app.use(helmet());
 app.use(cors({
   origin: function (origin, callback) {
-    const clientUrl = process.env.CLIENT_URL ? process.env.CLIENT_URL.replace(/\/$/, '') : 'http://localhost:5174';
+    const clientUrl = process.env.CLIENT_URL ? process.env.CLIENT_URL.replace(/\/$/, '') : 'http://localhost:5173';
     // Allow local development, the configured CLIENT_URL, and any Vercel domain alias
-    if (!origin || origin === clientUrl || origin === 'http://localhost:5174' || origin.endsWith('.vercel.app')) {
+    if (!origin || origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:') || origin === clientUrl || origin.endsWith('.vercel.app')) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));

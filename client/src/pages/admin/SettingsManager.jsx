@@ -14,7 +14,7 @@ export default function SettingsManager() {
 
   const fetchSettings = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include',  credentials: 'include' });
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include' });
       if (!response.ok) throw new Error('Failed to fetch settings');
       const data = await response.json();
       
@@ -34,16 +34,30 @@ export default function SettingsManager() {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include', 
+      // Filter out empty gallery boxes without an image URL before saving
+      const cleanedSettings = {
+        ...settings,
+        gallery: (settings.gallery || []).filter(item => item.imageUrl && item.imageUrl.trim() !== '')
+      };
+
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(settings)
+        credentials: 'include',
+        body: JSON.stringify(cleanedSettings)
       });
       
-      if (!response.ok) throw new Error('Failed to save settings');
+      const resData = await response.json();
+      if (!response.ok) throw new Error(resData.error || resData.message || 'Failed to save settings');
+      
+      if (resData.startDate) resData.startDate = resData.startDate.split('T')[0];
+      if (resData.endDate) resData.endDate = resData.endDate.split('T')[0];
+      if (resData.registrationDeadline) resData.registrationDeadline = resData.registrationDeadline.split('T')[0];
+
+      setSettings(resData);
       alert('Settings saved successfully!');
     } catch (err) {
-      alert(err.message);
+      alert('Save failed: ' + err.message);
     } finally {
       setIsSaving(false);
     }
@@ -89,7 +103,7 @@ export default function SettingsManager() {
     setSettings({ ...settings, announcements: newAnn });
   };
 
-  // Image Upload Handler
+  // Single Image Upload Handler
   const [isUploading, setIsUploading] = useState(false);
   const handleUploadImage = async (e, callback) => {
     const file = e.target.files[0];
@@ -100,7 +114,6 @@ export default function SettingsManager() {
     formData.append('image', file);
 
     try {
-      // Assuming Admin authentication JWT is handled by the browser/proxy automatically
       const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/upload`, { credentials: 'include', 
         method: 'POST',
         body: formData
@@ -113,6 +126,39 @@ export default function SettingsManager() {
       alert('Error uploading image: ' + err.message);
     } finally {
       setIsUploading(false);
+    }
+  };
+
+  // Multiple Gallery Photos Upload Handler
+  const handleUploadMultipleGalleryImages = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    setIsUploading(true);
+    try {
+      const uploadPromises = files.map(async (file) => {
+        const formData = new FormData();
+        formData.append('image', file);
+        const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/upload`, {
+          credentials: 'include',
+          method: 'POST',
+          body: formData
+        });
+        if (!res.ok) throw new Error(`Failed to upload ${file.name}`);
+        const data = await res.json();
+        return { imageUrl: data.url, caption: '', showOnHomepage: true };
+      });
+
+      const newImages = await Promise.all(uploadPromises);
+      setSettings(prev => ({
+        ...prev,
+        gallery: [...(prev.gallery || []), ...newImages]
+      }));
+    } catch (err) {
+      alert('Error uploading photos: ' + err.message);
+    } finally {
+      setIsUploading(false);
+      e.target.value = '';
     }
   };
 
@@ -140,7 +186,7 @@ export default function SettingsManager() {
   const addGalleryImage = () => {
     setSettings(prev => ({
       ...prev,
-      gallery: [...(prev.gallery || []), { imageUrl: '', caption: '' }]
+      gallery: [...(prev.gallery || []), { imageUrl: '', caption: '', showOnHomepage: true }]
     }));
   };
 
@@ -525,14 +571,26 @@ export default function SettingsManager() {
           {/* GALLERY */}
           {activeTab === 'gallery' && (
             <div className="space-y-6">
-              <div className="flex justify-between items-center bg-blue-50 text-blue-800 p-4 rounded-xl border border-blue-100">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-blue-50 text-blue-800 p-4 rounded-xl border border-blue-100">
                 <span className="text-sm font-medium">Add photos to display in the VVS 1.0 Gallery section on the public website.</span>
-                <button 
-                  onClick={addGalleryImage}
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shrink-0"
-                >
-                  <Plus size={16} /> Add Photo Box
-                </button>
+                <div className="flex items-center gap-2 shrink-0">
+                  <label className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors cursor-pointer shadow-sm">
+                    <Upload size={16} /> Upload Multiple Photos
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      multiple 
+                      className="hidden" 
+                      onChange={handleUploadMultipleGalleryImages}
+                    />
+                  </label>
+                  <button 
+                    onClick={addGalleryImage}
+                    className="flex items-center gap-1.5 px-3 py-2 bg-white text-blue-700 border border-blue-200 text-sm font-medium rounded-lg hover:bg-blue-50 transition-colors"
+                  >
+                    <Plus size={16} /> Add Photo Box
+                  </button>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -579,6 +637,19 @@ export default function SettingsManager() {
                         onChange={(e) => updateGalleryImage(index, 'caption', e.target.value)}
                         className="w-full px-2 py-1.5 border border-border rounded focus:ring-2 focus:ring-gold outline-none text-xs text-slate-dark text-center"
                       />
+
+                      <div className="flex items-center justify-center gap-1.5 pt-1 border-t border-border-light">
+                        <input 
+                          type="checkbox"
+                          id={`show-home-${index}`}
+                          checked={img.showOnHomepage !== false}
+                          onChange={(e) => updateGalleryImage(index, 'showOnHomepage', e.target.checked)}
+                          className="w-3.5 h-3.5 accent-navy cursor-pointer"
+                        />
+                        <label htmlFor={`show-home-${index}`} className="text-[11px] font-medium text-slate-dark cursor-pointer select-none">
+                          Show on Main Page
+                        </label>
+                      </div>
                     </div>
                   ))
                 )}

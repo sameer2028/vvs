@@ -17,11 +17,12 @@ export default function AdminLoginPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/auth/admin/login`, { credentials: 'include', 
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/auth/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
 

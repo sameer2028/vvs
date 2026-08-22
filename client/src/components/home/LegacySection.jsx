@@ -9,11 +9,13 @@ export default function LegacySection() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include',  credentials: 'include' });
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include' });
         const data = await response.json();
-        // Get the first 4 gallery images
-        const sortedGallery = (data.gallery || []).sort((a, b) => (a.order || 0) - (b.order || 0));
-        setGalleryImages(sortedGallery.slice(0, 4));
+        // Filter photos selected to show on main page
+        const homepagePhotos = (data.gallery || [])
+          .filter(img => img.showOnHomepage !== false)
+          .sort((a, b) => (a.order || 0) - (b.order || 0));
+        setGalleryImages(homepagePhotos.slice(0, 4));
       } catch (err) {
         console.error('Failed to load gallery images:', err);
       }
@@ -45,7 +47,14 @@ export default function LegacySection() {
                     } relative`}
                   >
                     {img ? (
-                      <img src={img.imageUrl} alt={img.caption || 'Legacy'} className="w-full h-full object-cover" />
+                      <div className="relative w-full h-full group">
+                        <img src={img.imageUrl} alt={img.caption || 'Legacy'} className="w-full h-full object-cover" />
+                        {img.caption && (
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy/90 via-navy/50 to-transparent opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity p-2.5">
+                            <p className="text-white text-[11px] font-medium leading-snug line-clamp-2">{img.caption}</p>
+                          </div>
+                        )}
+                      </div>
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-navy/3 to-gold/3">
                         <Camera size={24} className="text-slate-light" />
@@ -55,10 +64,6 @@ export default function LegacySection() {
                 );
               })}
             </div>
-
-            <p className="text-xs text-slate mt-3 text-center italic">
-              Legacy images updated via Admin Portal Gallery
-            </p>
           </motion.div>
 
           {/* Text */}

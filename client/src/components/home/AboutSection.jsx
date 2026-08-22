@@ -16,7 +16,7 @@ export default function AboutSection() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include',  credentials: 'include' });
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include' });
         const data = await response.json();
         if (data.aboutImage) {
           setAboutImage(data.aboutImage);
@@ -91,10 +91,10 @@ export default function AboutSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            <div className="relative rounded-2xl overflow-hidden bg-surface aspect-[4/3]">
+            <div className="relative rounded-2xl overflow-hidden bg-navy/5 shadow-md border border-border aspect-[4/5] max-w-md mx-auto">
               {/* Photo or Placeholder visual */}
               {aboutImage ? (
-                <img src={aboutImage} alt="About VVS" className="w-full h-full object-cover" />
+                <img src={aboutImage} alt="About VVS" className="w-full h-full object-contain bg-navy/95" />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy/5 to-gold/5">
                   <div className="text-center p-8">

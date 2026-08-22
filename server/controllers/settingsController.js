@@ -24,15 +24,15 @@ export const getSettings = async (req, res) => {
 // @access  Private/Admin
 export const updateSettings = async (req, res) => {
   try {
-    let settings = await Settings.findOne();
-    
-    if (!settings) {
-      settings = new Settings(req.body);
-    } else {
-      Object.assign(settings, req.body);
-    }
-    
-    const updatedSettings = await settings.save();
+    const updateData = { ...req.body };
+    delete updateData._id;
+    delete updateData.__v;
+
+    const updatedSettings = await Settings.findOneAndUpdate(
+      {},
+      { $set: updateData },
+      { new: true, upsert: true, runValidators: true }
+    );
     res.json(updatedSettings);
   } catch (error) {
     res.status(400).json({ message: 'Invalid settings data', error: error.message });
