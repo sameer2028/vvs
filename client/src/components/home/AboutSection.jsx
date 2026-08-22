@@ -89,32 +89,33 @@ export default function AboutSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative"
+            className="relative max-w-md mx-auto w-full flex justify-center"
           >
-            <div className="relative rounded-2xl overflow-hidden bg-navy/5 shadow-md border border-border aspect-[4/5] max-w-md mx-auto">
-              {/* Photo or Placeholder visual */}
-              {aboutImage ? (
-                <img src={aboutImage} alt="About VVS" className="w-full h-full object-contain bg-navy/95" />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy/5 to-gold/5">
-                  <div className="text-center p-8">
-                    <div className="w-20 h-20 rounded-full bg-gold-subtle flex items-center justify-center mx-auto mb-4">
-                      <Globe size={36} className="text-gold" />
-                    </div>
-                    <p
-                      className="text-xl font-semibold text-navy"
-                      style={{ fontFamily: 'var(--font-heading)' }}
-                    >
-                      VVS 2.0
-                    </p>
-                    <p className="text-sm text-slate mt-1">Youth Parliament & MUN</p>
-                    <p className="text-xs text-slate/60 mt-3">
-                      Conference imagery will be added via Admin Portal
-                    </p>
+            {aboutImage ? (
+              <img 
+                src={aboutImage} 
+                alt="About VVS 2.0 Poster" 
+                className="w-full h-auto max-h-[680px] object-contain rounded-2xl shadow-xl border border-border" 
+              />
+            ) : (
+              <div className="relative w-full rounded-2xl overflow-hidden bg-surface aspect-[4/3] border border-border shadow-md flex items-center justify-center">
+                <div className="text-center p-8">
+                  <div className="w-20 h-20 rounded-full bg-gold-subtle flex items-center justify-center mx-auto mb-4">
+                    <Globe size={36} className="text-gold" />
                   </div>
+                  <p
+                    className="text-xl font-semibold text-navy"
+                    style={{ fontFamily: 'var(--font-heading)' }}
+                  >
+                    VVS 2.0
+                  </p>
+                  <p className="text-sm text-slate mt-1">Youth Parliament & MUN</p>
+                  <p className="text-xs text-slate/60 mt-3">
+                    Conference imagery will be added via Admin Portal
+                  </p>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
 
             {/* Decorative elements */}
             <div className="absolute -top-4 -right-4 w-24 h-24 border-2 border-gold/20 rounded-2xl -z-10" />
