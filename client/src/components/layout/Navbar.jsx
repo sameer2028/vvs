@@ -8,10 +8,10 @@ const navLinks = [
   { label: 'Home', path: '/' },
   { label: 'About', path: '/about' },
   { label: 'Committees', path: '/committees' },
-  { label: 'Awards', path: '/awards' },
+  { label: 'Experience', path: '/awards' },
+  { label: 'VVS 1.0', path: '/vvs-1' },
   { label: 'Schedule', path: '/schedule' },
   { label: 'Team', path: '/team' },
-  { label: 'VVS 1.0', path: '/vvs-1' },
   { label: 'FAQ', path: '/faq' },
   { label: 'Contact', path: '/contact' },
 ];

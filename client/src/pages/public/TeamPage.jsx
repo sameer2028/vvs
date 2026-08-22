@@ -11,32 +11,30 @@ function TeamCard({ member, index }) {
       transition={{ duration: 0.4, delay: 0.08 * index }}
       className="group bg-white rounded-xl border border-border overflow-hidden
         hover:border-gold/30 hover:shadow-[var(--shadow-card-hover)]
-        transition-all duration-300"
+        transition-all duration-300 flex flex-col items-center p-5 text-center"
     >
-      {/* Photo placeholder or Image */}
-      <div className="aspect-[3/3.5] bg-gradient-to-br from-surface to-border-light flex items-center justify-center relative overflow-hidden">
+      {/* Compact Photo */}
+      <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-br from-surface to-border-light border-2 border-gold/20 flex items-center justify-center overflow-hidden mb-4 group-hover:border-gold/60 transition-all duration-300 shadow-sm flex-shrink-0">
         {member.imageUrl && member.imageUrl !== '/assets/placeholder.jpg' ? (
           <img src={member.imageUrl} alt={member.name} className="w-full h-full object-cover" />
         ) : (
-          <div className="w-20 h-20 rounded-full bg-white border-2 border-border flex items-center justify-center group-hover:border-gold/30 transition-colors">
-            <User size={32} className="text-slate-light" />
-          </div>
+          <User size={32} className="text-slate-light" />
         )}
       </div>
 
-      <div className="p-5 text-center relative">
+      <div className="relative w-full">
         <h3
-          className="text-lg font-bold text-navy"
+          className="text-base sm:text-lg font-bold text-navy"
           style={{ fontFamily: 'var(--font-heading)' }}
         >
           {member.name}
         </h3>
-        <p className="text-sm text-gold font-medium mt-1">
+        <p className="text-xs sm:text-sm text-gold font-medium mt-1">
           {member.role}
         </p>
         {member.linkedin && (
-          <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="absolute top-4 right-4 text-slate hover:text-navy transition-colors">
-            <ExternalLink size={16} />
+          <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 text-slate hover:text-navy transition-colors">
+            <ExternalLink size={14} />
           </a>
         )}
       </div>
@@ -113,7 +111,7 @@ export default function TeamPage() {
                   <h2 className="text-2xl sm:text-3xl font-bold text-navy text-center mb-8" style={{ fontFamily: 'var(--font-heading)' }}>
                     Guest Panel
                   </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                     {guestPanel.map((member, i) => (
                       <TeamCard key={member._id || i} member={member} index={i} />
                     ))}
@@ -126,7 +124,7 @@ export default function TeamPage() {
                   <h2 className="text-2xl sm:text-3xl font-bold text-navy text-center mb-8" style={{ fontFamily: 'var(--font-heading)' }}>
                     Organising Committee
                   </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                     {organisingTeam.map((member, i) => (
                       <TeamCard key={member._id || i} member={member} index={i} />
                     ))}
