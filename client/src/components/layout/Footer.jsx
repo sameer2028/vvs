@@ -6,6 +6,7 @@ import logoImage from '../../assets/favicon.png';
 const quickLinks = [
   { label: 'About', path: '/about' },
   { label: 'Committees', path: '/committees' },
+  { label: 'Venue', path: '/venue' },
   { label: 'Awards', path: '/awards' },
   { label: 'Schedule', path: '/schedule' },
   { label: 'Team', path: '/team' },

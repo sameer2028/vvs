@@ -9,6 +9,7 @@ import HomePage from './pages/public/HomePage';
 import AboutPage from './pages/public/AboutPage';
 import CommitteesPage from './pages/public/CommitteesPage';
 import CommitteeDetailPage from './pages/public/CommitteeDetailPage';
+import VenuePage from './pages/public/VenuePage';
 import AwardsPage from './pages/public/AwardsPage';
 import TeamPage from './pages/public/TeamPage';
 import SchedulePage from './pages/public/SchedulePage';
@@ -48,6 +49,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/committees" element={<CommitteesPage />} />
           <Route path="/committees/:slug" element={<CommitteeDetailPage />} />
+          <Route path="/venue" element={<VenuePage />} />
           <Route path="/awards" element={<AwardsPage />} />
           <Route path="/team" element={<TeamPage />} />
           <Route path="/schedule" element={<SchedulePage />} />
