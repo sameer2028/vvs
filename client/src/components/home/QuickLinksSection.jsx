@@ -19,7 +19,7 @@ const mainLinks = [
   },
   {
     title: 'Download Brochure',
-    url: '/brochure.pdf',
+    url: 'https://drive.google.com/uc?export=download&id=1jDRSnZzKcQcaqv-knP3RbxFSAsmSdE5a',
     icon: Download
   }
 ];

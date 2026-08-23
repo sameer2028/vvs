@@ -32,16 +32,17 @@ export default function BrochureSection() {
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <a
-                href="/brochure.pdf"
+                href="https://drive.google.com/uc?export=download&id=1jDRSnZzKcQcaqv-knP3RbxFSAsmSdE5a"
                 target="_blank"
                 rel="noopener noreferrer"
+                download
                 className="group flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-3.5 bg-gold text-navy text-sm sm:text-base font-bold rounded-xl hover:bg-gold-light transition-all duration-300 shadow-md"
               >
                 <Download size={18} className="group-hover:-translate-y-0.5 transition-transform" />
                 Download Brochure
               </a>
               <a
-                href="/brochure.pdf"
+                href="https://drive.google.com/file/d/1jDRSnZzKcQcaqv-knP3RbxFSAsmSdE5a/view?usp=drivesdk"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-3.5 bg-white/10 text-white text-sm sm:text-base font-semibold rounded-xl hover:bg-white/20 transition-all duration-300 backdrop-blur-sm"
