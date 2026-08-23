@@ -60,7 +60,7 @@ export default function Footer() {
                 <Mail size={18} />
               </a>
               <a
-                href="https://wa.me/917985444391"
+                href="https://wa.me/919450378138"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center
@@ -71,7 +71,7 @@ export default function Footer() {
                 <WhatsAppIcon size={18} />
               </a>
               <a
-                href="tel:+917985444391"
+                href="tel:+919335949450"
                 className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center
                   hover:bg-gold/20 hover:text-gold transition-all duration-200"
                 aria-label="Phone"
