@@ -23,6 +23,13 @@ export default function Navbar() {
   const isHome = location.pathname === '/';
   const isTransparentHero = isHome && !isScrolled;
 
+  const handleNavClick = () => {
+    setIsOpen(false);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -47,7 +54,7 @@ export default function Navbar() {
       <div className="container-wide mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link to="/" onClick={() => window.scrollTo(0, 0)} className="flex items-center gap-2 group" id="nav-logo">
+          <Link to="/" onClick={handleNavClick} className="flex items-center gap-2 group" id="nav-logo">
             <img 
               src={logoImage} 
               alt="VVS 2.0 Logo" 
@@ -61,7 +68,7 @@ export default function Navbar() {
               <NavLink
                 key={link.path}
                 to={link.path}
-                onClick={() => window.scrollTo(0, 0)}
+                onClick={handleNavClick}
                 id={`nav-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
                 className={({ isActive }) =>
                   `px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
@@ -84,7 +91,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-3">
             <Link
               to="/register"
-              onClick={() => window.scrollTo(0, 0)}
+              onClick={handleNavClick}
               id="nav-register-btn"
               className={`px-6 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 active:scale-[0.98] ${
                 isTransparentHero
@@ -122,31 +129,42 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className="lg:hidden bg-white border-t border-border overflow-hidden"
+            className={`lg:hidden overflow-hidden border-t ${
+              isTransparentHero
+                ? 'bg-navy/95 backdrop-blur-xl border-white/10 text-white shadow-2xl'
+                : 'bg-white border-border text-navy shadow-xl'
+            }`}
           >
             <div className="px-4 py-4 space-y-1">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.path}
                   to={link.path}
-                  onClick={() => window.scrollTo(0, 0)}
+                  onClick={handleNavClick}
                   className={({ isActive }) =>
                     `block px-4 py-3 text-sm font-medium rounded-lg transition-colors ${
                       isActive
-                        ? 'text-gold bg-gold-subtle'
-                        : 'text-slate-dark hover:text-navy hover:bg-surface'
+                        ? isTransparentHero
+                          ? 'text-navy bg-gold font-bold'
+                          : 'text-gold bg-gold-subtle font-semibold'
+                        : isTransparentHero
+                          ? 'text-white/90 hover:text-white hover:bg-white/10'
+                          : 'text-slate-dark hover:text-navy hover:bg-surface'
                     }`
                   }
                 >
                   {link.label}
                 </NavLink>
               ))}
-              <div className="pt-3 border-t border-border mt-3 space-y-2">
+              <div className={`pt-3 border-t mt-3 space-y-2 ${isTransparentHero ? 'border-white/10' : 'border-border'}`}>
                 <Link
                   to="/register"
-                  onClick={() => window.scrollTo(0, 0)}
-                  className="block w-full text-center px-6 py-3 bg-navy text-white text-sm font-semibold rounded-lg
-                    hover:bg-navy-light transition-all duration-200"
+                  onClick={handleNavClick}
+                  className={`block w-full text-center px-6 py-3 text-sm font-semibold rounded-lg transition-all duration-200 ${
+                    isTransparentHero
+                      ? 'bg-gold text-navy font-bold hover:bg-gold-light shadow-md'
+                      : 'bg-navy text-white hover:bg-navy-light'
+                  }`}
                 >
                   Register Now
                 </Link>

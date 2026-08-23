@@ -5,7 +5,20 @@ export default function ScrollToTop() {
   const { pathname, search, hash } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    scrollToTop();
+    const timeout = setTimeout(scrollToTop, 10);
+    const anim = requestAnimationFrame(scrollToTop);
+
+    return () => {
+      clearTimeout(timeout);
+      cancelAnimationFrame(anim);
+    };
   }, [pathname, search, hash]);
 
   return null;
