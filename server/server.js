@@ -6,6 +6,8 @@ import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import apiRoutes from './routes/api.js';
+import Committee from './models/Committee.js';
+
 
 // Load env vars
 dotenv.config();
@@ -64,6 +66,65 @@ app.get('/health', (req, res) => {
 app.head('/health', (req, res) => {
   res.status(200).end();
 });
+
+// Robots.txt route
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send(`User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /delegate/
+Disallow: /api/
+
+Sitemap: https://vvsonline.in/sitemap.xml`);
+});
+
+// Dynamic Sitemap route
+app.get('/sitemap.xml', async (req, res) => {
+  try {
+    const baseUrl = 'https://vvsonline.in';
+    const staticPages = [
+      '',
+      '/about',
+      '/committees',
+      '/register',
+      '/venue',
+      '/schedule',
+      '/awards',
+      '/team',
+      '/vvs-1',
+      '/faq',
+      '/contact'
+    ];
+
+    let committeePages = [];
+    try {
+      const committees = await Committee.find({ isActive: true }).select('slug');
+      committeePages = committees.map(c => `/committees/${c.slug}`);
+    } catch (e) {
+      // Fallback
+    }
+
+    const allPages = [...staticPages, ...committeePages];
+    const today = new Date().toISOString().split('T')[0];
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${allPages.map(page => `  <url>
+    <loc>${baseUrl}${page}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${page === '' || page === '/register' || page === '/committees' ? 'daily' : 'weekly'}</changefreq>
+    <priority>${page === '' ? '1.0' : page.startsWith('/committees') || page === '/register' ? '0.9' : '0.7'}</priority>
+  </url>`).join('\n')}
+</urlset>`;
+
+    res.header('Content-Type', 'application/xml');
+    res.send(xml);
+  } catch (error) {
+    res.status(500).end();
+  }
+});
+
 
 // Mount API routes
 app.use('/api', apiRoutes);
