@@ -82,9 +82,6 @@ export default function HeroSection() {
         {/* Semi-transparent overlay to ensure text is readable over the image */}
         <div className="absolute inset-0 bg-navy/40 backdrop-blur-[0.5px]" />
 
-        {/* Gold accent line at top */}
-        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-gold to-transparent" />
-
         {/* Content */}
         <div className="relative z-10 container-wide mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 lg:pt-28 lg:pb-20">
           <div className="max-w-4xl mx-auto text-center">
