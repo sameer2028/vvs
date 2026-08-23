@@ -1,22 +1,25 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  MapPin, 
-  Navigation, 
-  Train, 
-  Plane, 
-  Bus, 
-  Building2, 
-  ShieldCheck, 
-  Wifi, 
-  Coffee, 
-  Mic2, 
-  Calendar, 
+import CartographicArrivalMap from '../../components/venue/CartographicArrivalMap';
+import {
+  MapPin,
+  Navigation,
+  Train,
+  Plane,
+  Bus,
+  Building2,
+  ShieldCheck,
+  Wifi,
+  Coffee,
+  Mic2,
+  Calendar,
   ExternalLink,
   PhoneCall,
   Compass,
   Sparkles,
-  Camera
+  Camera,
+  Star,
+  GraduationCap
 } from 'lucide-react';
 
 export default function VenuePage() {
@@ -173,8 +176,8 @@ export default function VenuePage() {
                 </div>
 
                 <p className="text-xs sm:text-base text-slate leading-relaxed">
-                  Established in 1954 under the inspiration of <strong>Dr. Annie Besant</strong> and founded by <strong>Dr. Rohit Mehta</strong>, 
-                  <strong> Vasant Kanya Mahavidyalaya (VKM)</strong> is an esteemed institution affiliated with the prestigious <strong>Banaras Hindu University (BHU)</strong>. 
+                  Established in 1954 under the inspiration of <strong>Dr. Annie Besant</strong> and founded by <strong>Dr. Rohit Mehta</strong>,
+                  <strong> Vasant Kanya Mahavidyalaya (VKM)</strong> is an esteemed institution affiliated with the prestigious <strong>Banaras Hindu University (BHU)</strong>.
                   Situated in the historic heart of Varanasi at Kammacha, VKM provides a serene yet vibrant academic atmosphere ideal for intellectual exchanges, political debates, and global diplomacy simulations.
                 </p>
 
@@ -200,10 +203,10 @@ export default function VenuePage() {
               <div className="lg:col-span-5 h-full flex flex-col justify-center">
                 <div className="w-full h-full min-h-[280px] sm:min-h-[350px] max-h-[440px] rounded-xl overflow-hidden bg-navy/5 relative group border border-border shadow-md flex items-center justify-center">
                   {venueImage ? (
-                    <img 
-                      src={venueImage} 
-                      alt="Vasant Kanya Mahavidyalaya Campus Venue" 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 rounded-xl" 
+                    <img
+                      src={venueImage}
+                      alt="Vasant Kanya Mahavidyalaya Campus Venue"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 rounded-xl"
                     />
                   ) : (
                     <div className="w-full h-full p-6 flex flex-col items-center justify-center bg-gradient-to-br from-navy/5 via-gold/5 to-surface text-center min-h-[280px]">
@@ -278,6 +281,9 @@ export default function VenuePage() {
         </div>
       </section>
 
+      {/* ── Premium Cream Cartographic Map ──────────────────────────────── */}
+      <CartographicArrivalMap />
+
       {/* Travel & Transport Guide */}
       <section className="section-padding bg-surface">
         <div className="container-narrow mx-auto">
@@ -346,74 +352,6 @@ export default function VenuePage() {
                   <p className="text-xs text-slate leading-relaxed">{lm.description}</p>
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Map & Address Card */}
-      <section className="section-padding bg-ivory">
-        <div className="container-narrow mx-auto">
-          <div className="text-center mb-10">
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-gold">Location Map</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-navy mt-1" style={{ fontFamily: 'var(--font-heading)' }}>
-              Find Us on the Map
-            </h2>
-          </div>
-
-          <div className="bg-white rounded-2xl border border-border overflow-hidden shadow-lg grid grid-cols-1 lg:grid-cols-3">
-            {/* Map Frame */}
-            <div className="lg:col-span-2 min-h-[350px] sm:min-h-[420px] relative bg-slate/10">
-              <iframe
-                title="Vasant Kanya Mahavidyalaya Location Map"
-                src={mapEmbedUrl}
-                width="100%"
-                height="100%"
-                style={{ border: 0, minHeight: '350px' }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="w-full h-full"
-              />
-            </div>
-
-            {/* Address & Quick Info Side */}
-            <div className="p-6 sm:p-8 bg-navy text-white flex flex-col justify-between">
-              <div>
-                <span className="text-xs font-bold text-gold uppercase tracking-widest block mb-2">Venue Address</span>
-                <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'var(--font-heading)' }}>
-                  Vasant Kanya Mahavidyalaya
-                </h3>
-                <p className="text-sm text-white/80 leading-relaxed mb-6">
-                  Kammacha, Bhelupur,<br />
-                  Varanasi, Uttar Pradesh 221010,<br />
-                  India
-                </p>
-
-                <div className="space-y-4 pt-4 border-t border-white/10 text-sm">
-                  <div className="flex items-center gap-3 text-white/90">
-                    <PhoneCall size={16} className="text-gold shrink-0" />
-                    <span>Enquiries: <strong>+91 9631897232</strong></span>
-                  </div>
-                  <div className="flex items-center gap-3 text-white/90">
-                    <MapPin size={16} className="text-gold shrink-0" />
-                    <span>Landmark: Near Kamachha Crossing</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-white/10">
-                <a
-                  href={googleMapsDirectionsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-gold text-navy text-sm font-bold rounded-xl
-                    hover:bg-gold-light transition-all duration-200 shadow-md"
-                >
-                  <Navigation size={18} />
-                  Open Directions in Maps
-                </a>
-              </div>
             </div>
           </div>
         </div>
