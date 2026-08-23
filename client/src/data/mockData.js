@@ -6,7 +6,7 @@
 
 export const eventSettings = {
   eventName: 'Vasant Vaani Sansad 2.0',
-  tagline: 'A Platform Where Voices Become Leaders.',
+  tagline: 'Voice • Vision • Victory — A Platform Where Voices Become Leaders.',
   startDate: '2026-09-26',
   endDate: '2026-09-27',
   venue: 'Vasant Kanya Mahavidyalaya, Kammacha, Varanasi',

@@ -36,7 +36,7 @@ export default function Footer() {
               />
             </div>
             <p className="text-sm text-white/60 leading-relaxed mb-6">
-              A Platform Where Voices Become Leaders. The flagship Youth Parliament & MUN conference of Vasant Kanya Mahavidyalaya, BHU.
+              <span className="text-gold font-medium">Voice • Vision • Victory</span> — A Platform Where Voices Become Leaders. The flagship Youth Parliament & MUN conference of Vasant Kanya Mahavidyalaya, BHU.
             </p>
             <div className="flex items-center gap-3">
               <a

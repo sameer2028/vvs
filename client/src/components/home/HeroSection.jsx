@@ -115,16 +115,30 @@ export default function HeroSection() {
               <span className="text-gold">2.0</span>
             </motion.h1>
 
-            {/* Tagline */}
-            <motion.p
+            {/* Official Quote & Tagline */}
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-6 text-lg sm:text-xl lg:text-2xl text-white/90 font-light italic drop-shadow"
-              style={{ fontFamily: 'var(--font-heading)' }}
+              className="mt-6 flex flex-col items-center justify-center gap-2"
             >
-              "Where Voices Become Leaders."
-            </motion.p>
+              <div
+                className="text-xl sm:text-2xl md:text-3xl text-gold font-semibold tracking-widest uppercase drop-shadow-md flex items-center justify-center gap-2 sm:gap-3"
+                style={{ fontFamily: 'var(--font-heading)' }}
+              >
+                <span>Voice</span>
+                <span className="text-gold/60 text-sm sm:text-lg">•</span>
+                <span>Vision</span>
+                <span className="text-gold/60 text-sm sm:text-lg">•</span>
+                <span>Victory</span>
+              </div>
+              <p
+                className="text-base sm:text-lg text-white/80 font-light italic drop-shadow"
+                style={{ fontFamily: 'var(--font-heading)' }}
+              >
+                "Where Voices Become Leaders."
+              </p>
+            </motion.div>
 
             {/* Venue */}
             <motion.div
