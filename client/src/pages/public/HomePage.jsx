@@ -1,4 +1,5 @@
 import HeroSection from '../../components/home/HeroSection';
+import QuickLinksSection from '../../components/home/QuickLinksSection';
 import StatsBar from '../../components/home/StatsBar';
 import AboutSection from '../../components/home/AboutSection';
 import CommitteePreview from '../../components/home/CommitteePreview';
@@ -11,6 +12,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <QuickLinksSection />
       <StatsBar />
       <AboutSection />
       <CommitteePreview />

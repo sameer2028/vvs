@@ -151,13 +151,9 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
             >
-              <Button to="/register" size="lg" variant="primary" id="hero-register-btn">
+              <Button to="/register" size="lg" variant="gold" className="font-bold" id="hero-register-btn">
                 Register Now
                 <ArrowRight size={18} />
-              </Button>
-              <Button href="/brochure.pdf" target="_blank" rel="noopener noreferrer" size="lg" variant="secondary" id="hero-brochure-btn">
-                View Brochure
-                <Download size={18} />
               </Button>
               <Button to="/committees" size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10" id="hero-explore-btn">
                 Explore Committees
