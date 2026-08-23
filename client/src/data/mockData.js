@@ -252,8 +252,9 @@ export const contactInfo = {
   whatsapp: '9450378138',
   contacts: [
     { name: 'Preeti Soren', phone: '9631897232' },
-    { name: 'Shreya Singh', phone: '9305786651' },
+    { name: 'Shreya Singh', phone: '9450378138' },
   ],
+
   venue: {
     name: 'Vasant Kanya Mahavidyalaya',
     address: 'Kammacha, Varanasi, Uttar Pradesh',
