@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   MapPin, 
@@ -14,10 +15,28 @@ import {
   ExternalLink,
   PhoneCall,
   Compass,
-  Sparkles
+  Sparkles,
+  Camera
 } from 'lucide-react';
 
 export default function VenuePage() {
+  const [venueImage, setVenueImage] = useState('');
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include' });
+        const data = await response.json();
+        if (data.venueImage) {
+          setVenueImage(data.venueImage);
+        }
+      } catch (err) {
+        console.error('Failed to load venue image:', err);
+      }
+    };
+    fetchSettings();
+  }, []);
+
   const mapEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3606.817457790596!2d82.99220027591605!3d25.2935299285097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398e31fcd815b801%3A0xb35ec2e5f5da812f!2sVasant%20Kanya%20Mahavidyalaya!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin";
   const googleMapsDirectionsUrl = "https://maps.google.com/?q=Vasant+Kanya+Mahavidyalaya+Kammacha+Varanasi";
 
@@ -122,71 +141,113 @@ export default function VenuePage() {
 
       {/* Quick Overview & Institutional Context */}
       <section className="section-padding bg-ivory">
-        <div className="container-narrow mx-auto">
+        <div className="container-wide mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="bg-white rounded-2xl border border-border p-6 sm:p-10 shadow-[var(--shadow-card)] mb-12"
+            className="bg-white rounded-2xl border border-border p-6 sm:p-10 shadow-[var(--shadow-card)] mb-16"
           >
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-border mb-8">
-              <div>
-                <span className="text-xs font-bold text-gold uppercase tracking-wider">Institution Overview</span>
-                <h2 className="text-2xl sm:text-3xl font-bold text-navy mt-1" style={{ fontFamily: 'var(--font-heading)' }}>
-                  A Legacy of Excellence in Kashi
-                </h2>
-              </div>
-              <a
-                href={googleMapsDirectionsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-navy text-white text-sm font-semibold rounded-xl
-                  hover:bg-navy-light transition-all duration-200 shadow-md shrink-0"
-              >
-                <Navigation size={16} className="text-gold" />
-                Get Directions
-                <ExternalLink size={14} className="opacity-70" />
-              </a>
-            </div>
-
-            <p className="text-base text-slate leading-relaxed mb-6">
-              Established in 1954 under the inspiration of <strong>Dr. Annie Besant</strong> and founded by <strong>Dr. Rohit Mehta</strong>, 
-              <strong> Vasant Kanya Mahavidyalaya (VKM)</strong> is an esteemed institution affiliated with the prestigious <strong>Banaras Hindu University (BHU)</strong>. 
-              Situated in the historic heart of Varanasi at Kammacha, VKM provides a serene yet vibrant academic atmosphere ideal for intellectual exchanges, political debates, and global diplomacy simulations.
-            </p>
-
-            {/* Quick Specs Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
-              {[
-                { label: 'Founded', value: '1954' },
-                { label: 'Affiliation', value: 'BHU, Varanasi' },
-                { label: 'Campus Area', value: 'Kammacha City Center' },
-                { label: 'Motto', value: 'Education as Service' },
-              ].map((item) => (
-                <div key={item.label} className="p-4 bg-surface rounded-xl border border-border/60 text-center">
-                  <div className="text-lg sm:text-xl font-bold text-navy" style={{ fontFamily: 'var(--font-heading)' }}>
-                    {item.value}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              {/* Left Column: Overview & Specs */}
+              <div className="lg:col-span-7 space-y-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-border">
+                  <div>
+                    <span className="text-[11px] sm:text-xs font-bold text-gold uppercase tracking-wider">Institution Overview</span>
+                    <h2 className="text-xl sm:text-3xl font-bold text-navy mt-0.5" style={{ fontFamily: 'var(--font-heading)' }}>
+                      A Legacy of Excellence in Kashi
+                    </h2>
                   </div>
-                  <div className="text-xs text-slate mt-1 font-medium">{item.label}</div>
+                  <a
+                    href={googleMapsDirectionsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-navy text-white text-xs sm:text-sm font-semibold rounded-lg sm:rounded-xl
+                      hover:bg-navy-light transition-all duration-200 shadow-md shrink-0"
+                  >
+                    <Navigation size={14} className="text-gold" />
+                    Get Directions
+                    <ExternalLink size={12} className="opacity-70" />
+                  </a>
                 </div>
-              ))}
+
+                <p className="text-xs sm:text-base text-slate leading-relaxed">
+                  Established in 1954 under the inspiration of <strong>Dr. Annie Besant</strong> and founded by <strong>Dr. Rohit Mehta</strong>, 
+                  <strong> Vasant Kanya Mahavidyalaya (VKM)</strong> is an esteemed institution affiliated with the prestigious <strong>Banaras Hindu University (BHU)</strong>. 
+                  Situated in the historic heart of Varanasi at Kammacha, VKM provides a serene yet vibrant academic atmosphere ideal for intellectual exchanges, political debates, and global diplomacy simulations.
+                </p>
+
+                {/* Quick Specs Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+                  {[
+                    { label: 'Founded', value: '1954' },
+                    { label: 'Affiliation', value: 'BHU, Varanasi' },
+                    { label: 'Campus Area', value: 'Kammacha' },
+                    { label: 'Motto', value: 'Education as Service' },
+                  ].map((item) => (
+                    <div key={item.label} className="p-2.5 bg-surface rounded-lg sm:rounded-xl border border-border/60 text-center">
+                      <div className="text-sm sm:text-lg font-bold text-navy" style={{ fontFamily: 'var(--font-heading)' }}>
+                        {item.value}
+                      </div>
+                      <div className="text-[10px] sm:text-xs text-slate mt-0.5 font-medium">{item.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right Column: Venue Photo */}
+              <div className="lg:col-span-5 h-full flex flex-col justify-center">
+                <div className="w-full h-full min-h-[280px] sm:min-h-[350px] max-h-[440px] rounded-xl overflow-hidden bg-navy/5 relative group border border-border shadow-md flex items-center justify-center">
+                  {venueImage ? (
+                    <img 
+                      src={venueImage} 
+                      alt="Vasant Kanya Mahavidyalaya Campus Venue" 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 rounded-xl" 
+                    />
+                  ) : (
+                    <div className="w-full h-full p-6 flex flex-col items-center justify-center bg-gradient-to-br from-navy/5 via-gold/5 to-surface text-center min-h-[280px]">
+                      <div className="w-14 h-14 rounded-full bg-gold-subtle flex items-center justify-center mb-3">
+                        <Building2 size={28} className="text-gold-dark" />
+                      </div>
+                      <h3 className="text-base font-bold text-navy" style={{ fontFamily: 'var(--font-heading)' }}>
+                        VKM Campus Photo
+                      </h3>
+                      <p className="text-xs text-slate mt-1 max-w-xs">
+                        Admin can upload & update the venue photo anytime from the Admin Portal.
+                      </p>
+                    </div>
+                  )}
+                  {venueImage && (
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy/90 via-navy/40 to-transparent p-4 text-white flex justify-between items-end">
+                      <div>
+                        <span className="inline-block px-2 py-0.5 rounded bg-gold text-navy text-[10px] font-bold uppercase tracking-wider mb-1">
+                          Official Venue
+                        </span>
+                        <h4 className="text-sm sm:text-base font-bold text-white" style={{ fontFamily: 'var(--font-heading)' }}>
+                          Vasant Kanya Mahavidyalaya
+                        </h4>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </motion.div>
 
           {/* Campus Facilities Grid */}
-          <div className="mb-16">
-            <div className="text-center mb-10">
+          <div className="mb-8 sm:mb-16">
+            <div className="text-center mb-6 sm:mb-10">
               <span className="text-xs font-semibold tracking-[0.2em] uppercase text-gold">Infrastructure</span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-navy mt-1" style={{ fontFamily: 'var(--font-heading)' }}>
+              <h2 className="text-xl sm:text-3xl font-bold text-navy mt-1" style={{ fontFamily: 'var(--font-heading)' }}>
                 Venue Facilities for Delegates
               </h2>
-              <p className="text-slate text-sm sm:text-base mt-2 max-w-xl mx-auto">
-                Designed to give delegates a seamless, professional, and comfortable conference experience.
+              <p className="text-slate text-xs sm:text-base mt-1.5 max-w-xl mx-auto">
+                Designed to give delegates a seamless and comfortable conference experience.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {facilities.map((fac, i) => {
                 const IconComponent = fac.icon;
                 return (
@@ -195,17 +256,17 @@ export default function VenuePage() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.08 }}
-                    className="bg-white rounded-xl border border-border p-6 hover:border-gold/40 hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 flex flex-col justify-between group"
+                    transition={{ duration: 0.4, delay: i * 0.05 }}
+                    className="bg-white rounded-xl border border-border p-3.5 sm:p-6 hover:border-gold/40 hover:shadow-[var(--shadow-card-hover)] transition-all duration-300 flex flex-col justify-between group"
                   >
                     <div>
-                      <div className="w-12 h-12 rounded-xl bg-gold-subtle flex items-center justify-center mb-4 group-hover:bg-gold/20 transition-colors">
-                        <IconComponent size={22} className="text-gold-dark" />
+                      <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gold-subtle flex items-center justify-center mb-2.5 sm:mb-4 group-hover:bg-gold/20 transition-colors">
+                        <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 text-gold-dark" />
                       </div>
-                      <h3 className="text-lg font-bold text-navy mb-2" style={{ fontFamily: 'var(--font-heading)' }}>
+                      <h3 className="text-xs sm:text-lg font-bold text-navy mb-1 sm:mb-2 leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>
                         {fac.title}
                       </h3>
-                      <p className="text-sm text-slate leading-relaxed">
+                      <p className="text-[11px] sm:text-sm text-slate leading-snug sm:leading-relaxed">
                         {fac.description}
                       </p>
                     </div>

@@ -74,6 +74,10 @@ const settingsSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  venueImage: {
+    type: String,
+    default: ''
+  },
   faqs: [faqSchema],
   announcements: [announcementSchema],
   teamMembers: [teamMemberSchema],

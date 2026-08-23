@@ -335,29 +335,56 @@ export default function SettingsManager() {
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-navy mb-2">Homepage About Section Image</label>
-                <div className="w-full h-48 bg-surface border-2 border-dashed border-border rounded-lg overflow-hidden relative group max-w-sm">
-                  {settings.aboutImage ? (
-                    <img src={settings.aboutImage} alt="About preview" className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="flex flex-col items-center justify-center h-full text-slate">
-                      <ImageIcon size={24} className="mb-2" />
-                      <span className="text-xs font-medium">No Image</span>
-                    </div>
-                  )}
-                  <label className="absolute inset-0 bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center cursor-pointer text-white">
-                    <Upload size={20} className="mb-1" />
-                    <span className="text-xs font-medium">Upload Image</span>
-                    <input 
-                      type="file" 
-                      accept="image/*" 
-                      className="hidden" 
-                      onChange={(e) => handleUploadImage(e, (url) => setSettings({...settings, aboutImage: url}))}
-                    />
-                  </label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-navy mb-2">Homepage About Section Image</label>
+                  <div className="w-full h-48 bg-surface border-2 border-dashed border-border rounded-lg overflow-hidden relative group">
+                    {settings.aboutImage ? (
+                      <img src={settings.aboutImage} alt="About preview" className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="flex flex-col items-center justify-center h-full text-slate">
+                        <ImageIcon size={24} className="mb-2" />
+                        <span className="text-xs font-medium">No Image</span>
+                      </div>
+                    )}
+                    <label className="absolute inset-0 bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center cursor-pointer text-white">
+                      <Upload size={20} className="mb-1" />
+                      <span className="text-xs font-medium">Upload Image</span>
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        className="hidden" 
+                        onChange={(e) => handleUploadImage(e, (url) => setSettings({...settings, aboutImage: url}))}
+                      />
+                    </label>
+                  </div>
+                  <p className="text-xs text-slate mt-2">Appears in the homepage "About VVS" section.</p>
                 </div>
-                <p className="text-xs text-slate mt-2">This image will appear on the homepage in the "About VVS" section.</p>
+
+                <div>
+                  <label className="block text-sm font-medium text-navy mb-2">Venue & Campus Photo</label>
+                  <div className="w-full h-48 bg-surface border-2 border-dashed border-border rounded-lg overflow-hidden relative group">
+                    {settings.venueImage ? (
+                      <img src={settings.venueImage} alt="Venue preview" className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="flex flex-col items-center justify-center h-full text-slate">
+                        <ImageIcon size={24} className="mb-2" />
+                        <span className="text-xs font-medium">No Image Uploaded</span>
+                      </div>
+                    )}
+                    <label className="absolute inset-0 bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center cursor-pointer text-white">
+                      <Upload size={20} className="mb-1" />
+                      <span className="text-xs font-medium">Upload Venue Photo</span>
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        className="hidden" 
+                        onChange={(e) => handleUploadImage(e, (url) => setSettings({...settings, venueImage: url}))}
+                      />
+                    </label>
+                  </div>
+                  <p className="text-xs text-slate mt-2">Appears in the Venue section on the public website.</p>
+                </div>
               </div>
 
               <div className="flex items-center gap-3 p-4 bg-surface rounded-xl border border-border">
