@@ -142,8 +142,8 @@ export default function Footer() {
               <li className="flex items-center gap-3">
                 <Phone size={16} className="text-gold shrink-0" />
                 <div className="text-sm text-white/60">
-                  <span>Preeti: 9631897232</span><br />
-                  <span>Shreya: 9305786651</span>
+                  <span>Preeti: +91-9631897232</span><br />
+                  <span>Shreya: +91-9450378138</span>
                 </div>
               </li>
             </ul>
