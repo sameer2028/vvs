@@ -231,46 +231,41 @@ export default function SettingsManager() {
 
       {error && <div className="p-4 bg-error/10 text-error rounded-xl">{error}</div>}
 
-      <div className="bg-white rounded-xl border border-border overflow-hidden shadow-sm">
-        <div className="flex border-b border-border bg-surface overflow-x-auto whitespace-nowrap scrollbar-hide">
-          <button 
-            onClick={() => setActiveTab('general')}
-            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors shrink-0 ${activeTab === 'general' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
-          >
-            <Settings size={16} />
-            General Settings
-          </button>
-          <button 
-            onClick={() => setActiveTab('faqs')}
-            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors shrink-0 ${activeTab === 'faqs' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
-          >
-            <MessageCircleQuestion size={16} />
-            FAQs
-          </button>
-          <button 
-            onClick={() => setActiveTab('announcements')}
-            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors shrink-0 ${activeTab === 'announcements' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
-          >
-            <Bell size={16} />
-            Announcements
-          </button>
-          <button 
-            onClick={() => setActiveTab('team')}
-            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors shrink-0 ${activeTab === 'team' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
-          >
-            <Users size={16} />
-            Team & Guests
-          </button>
-          <button 
-            onClick={() => setActiveTab('gallery')}
-            className={`flex items-center gap-2 px-6 py-4 font-medium text-sm transition-colors shrink-0 ${activeTab === 'gallery' ? 'bg-white text-navy border-b-2 border-b-navy' : 'text-slate hover:text-navy'}`}
-          >
-            <ImageIcon size={16} />
-            Gallery
-          </button>
+      <div className="bg-white rounded-2xl border border-border overflow-hidden shadow-sm">
+        {/* Modern Gold-Accented Tab Header */}
+        <div className="bg-surface p-2 sm:p-3 border-b border-border relative">
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar scroll-smooth p-1 touch-pan-x">
+            {[
+              { id: 'general', shortLabel: 'General', fullLabel: 'General Settings', icon: Settings },
+              { id: 'faqs', shortLabel: 'FAQs', fullLabel: 'FAQs', icon: MessageCircleQuestion },
+              { id: 'announcements', shortLabel: 'Announce', fullLabel: 'Announcements', icon: Bell },
+              { id: 'team', shortLabel: 'Team', fullLabel: 'Team & Guests', icon: Users },
+              { id: 'gallery', shortLabel: 'Gallery', fullLabel: 'Gallery', icon: ImageIcon }
+            ].map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 shrink-0 select-none ${
+                    isActive
+                      ? 'bg-navy text-gold font-bold shadow-md border border-navy-light shadow-navy/20 scale-[1.02]'
+                      : 'bg-white text-slate-dark hover:text-navy hover:bg-gold-subtle/50 border border-border/70 hover:border-gold/40'
+                  }`}
+                >
+                  <Icon size={16} className={isActive ? 'text-gold' : 'text-slate'} />
+                  <span className="hidden sm:inline">{tab.fullLabel}</span>
+                  <span className="sm:hidden">{tab.shortLabel}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <div className="p-6">
+
+
           {/* GENERAL SETTINGS */}
           {activeTab === 'general' && (
             <div className="space-y-6 max-w-3xl">

@@ -1,16 +1,40 @@
 import Registration from '../models/Registration.js';
 import Payment from '../models/Payment.js';
 import Committee from '../models/Committee.js';
+import AnalyticsLog from '../models/Analytics.js';
 
 // @desc    Get dashboard stats
 // @route   GET /api/admin/dashboard
 // @access  Private/Admin
 export const getDashboardStats = async (req, res) => {
   try {
-    const totalRegistrations = await Registration.countDocuments();
-    const verifiedPayments = await Payment.countDocuments({ status: 'verified' });
-    const pendingPayments = await Payment.countDocuments({ status: 'pending' });
-    const totalCommittees = await Committee.countDocuments();
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+
+    const [
+      totalRegistrations,
+      verifiedPayments,
+      pendingPayments,
+      totalCommittees,
+      totalPageViews,
+      uniqueVisitorsArr,
+      todayPageViews,
+      topPages
+    ] = await Promise.all([
+      Registration.countDocuments(),
+      Payment.countDocuments({ status: 'verified' }),
+      Payment.countDocuments({ status: 'pending' }),
+      Committee.countDocuments(),
+      AnalyticsLog.countDocuments(),
+      AnalyticsLog.distinct('visitorId'),
+      AnalyticsLog.countDocuments({ createdAt: { $gte: startOfToday } }),
+      AnalyticsLog.aggregate([
+        { $group: { _id: '$path', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 5 },
+        { $project: { _id: 0, path: '$_id', count: 1 } }
+      ])
+    ]);
 
     const recentRegistrations = await Registration.find()
       .sort({ createdAt: -1 })
@@ -22,12 +46,17 @@ export const getDashboardStats = async (req, res) => {
       verifiedPayments,
       pendingPayments,
       totalCommittees,
+      totalPageViews,
+      uniqueVisitors: uniqueVisitorsArr.length,
+      todayPageViews,
+      topPages,
       recentRegistrations
     });
   } catch (error) {
     res.status(500).json({ message: 'Server Error fetching dashboard stats' });
   }
 };
+
 
 // @desc    Get all registrations
 // @route   GET /api/admin/registrations

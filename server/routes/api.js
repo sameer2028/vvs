@@ -8,6 +8,7 @@ import settingsRoutes from './settingsRoutes.js';
 import adminRoutes from './adminRoutes.js';
 import uploadRoutes from './uploadRoutes.js';
 import delegateRoutes from './delegateRoutes.js';
+import analyticsRoutes from './analyticsRoutes.js';
 
 const router = express.Router();
 
@@ -20,5 +21,7 @@ router.use('/settings', settingsRoutes);
 router.use('/admin', adminRoutes);
 router.use('/upload', uploadRoutes);
 router.use('/delegate', delegateRoutes);
+router.use('/analytics', analyticsRoutes);
 
 export default router;
+

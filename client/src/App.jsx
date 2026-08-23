@@ -1,8 +1,10 @@
 import { Routes, Route, Outlet } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ScrollToTop from './components/common/ScrollToTop';
+import AnalyticsTracker from './components/common/AnalyticsTracker';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+
 
 // Public Pages
 import HomePage from './pages/public/HomePage';
@@ -42,7 +44,9 @@ function App() {
   return (
     <AuthProvider>
       <ScrollToTop />
+      <AnalyticsTracker />
       <Routes>
+
         {/* Public Website Routes */}
         <Route element={<><Navbar /><div className="flex-1 min-h-screen"><Outlet /></div><Footer /></>}>
           <Route path="/" element={<HomePage />} />
