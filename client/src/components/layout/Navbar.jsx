@@ -12,8 +12,6 @@ const navLinks = [
   { label: 'Experience', path: '/awards' },
   { label: 'VVS 1.0', path: '/vvs-1' },
   { label: 'Schedule', path: '/schedule' },
-  { label: 'Team', path: '/team' },
-  { label: 'FAQ', path: '/faq' },
   { label: 'Contact', path: '/contact' },
 ];
 
@@ -21,6 +19,9 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+
+  const isHome = location.pathname === '/';
+  const isTransparentHero = isHome && !isScrolled;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,9 +39,9 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-[var(--shadow-navbar)] border-b border-border/50'
-          : 'bg-transparent'
+        isTransparentHero
+          ? 'bg-gradient-to-b from-navy/80 via-navy/40 to-transparent backdrop-blur-[2px]'
+          : 'bg-white/95 backdrop-blur-md shadow-[var(--shadow-navbar)] border-b border-border/50'
       }`}
     >
       <div className="container-wide mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,10 +64,14 @@ export default function Navbar() {
                 onClick={() => window.scrollTo(0, 0)}
                 id={`nav-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
                 className={({ isActive }) =>
-                  `px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                  `px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                     isActive
-                      ? 'text-gold bg-gold-subtle'
-                      : 'text-slate-dark hover:text-navy hover:bg-surface'
+                      ? isTransparentHero
+                        ? 'text-navy bg-gold font-bold shadow-sm'
+                        : 'text-gold bg-gold-subtle font-semibold'
+                      : isTransparentHero
+                        ? 'text-white/90 hover:text-white hover:bg-white/15'
+                        : 'text-slate-dark hover:text-navy hover:bg-surface'
                   }`
                 }
               >
@@ -81,10 +86,11 @@ export default function Navbar() {
               to="/register"
               onClick={() => window.scrollTo(0, 0)}
               id="nav-register-btn"
-              className="px-6 py-2.5 bg-navy text-white text-sm font-semibold rounded-lg
-                hover:bg-navy-light transition-all duration-200
-                shadow-[0_2px_8px_rgba(27,42,74,0.2)] hover:shadow-[0_4px_12px_rgba(27,42,74,0.3)]
-                active:scale-[0.98]"
+              className={`px-6 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 active:scale-[0.98] ${
+                isTransparentHero
+                  ? 'bg-gold text-navy hover:bg-gold-light shadow-[0_2px_12px_rgba(212,175,55,0.4)] font-bold'
+                  : 'bg-navy text-white hover:bg-navy-light shadow-[0_2px_8px_rgba(27,42,74,0.2)]'
+              }`}
             >
               Register Now
             </Link>
@@ -93,11 +99,17 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden p-2 rounded-lg hover:bg-surface transition-colors"
+            className={`lg:hidden p-2 rounded-lg transition-colors ${
+              isTransparentHero ? 'hover:bg-white/10' : 'hover:bg-surface'
+            }`}
             aria-label="Toggle menu"
             id="nav-mobile-toggle"
           >
-            {isOpen ? <X size={24} className="text-navy" /> : <Menu size={24} className="text-navy" />}
+            {isOpen ? (
+              <X size={24} className={isTransparentHero ? 'text-white' : 'text-navy'} />
+            ) : (
+              <Menu size={24} className={isTransparentHero ? 'text-white' : 'text-navy'} />
+            )}
           </button>
         </div>
       </div>

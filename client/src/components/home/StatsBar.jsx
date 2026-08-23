@@ -68,7 +68,7 @@ const stats = [
 
 export default function StatsBar() {
   return (
-    <section className="relative -mt-1 bg-navy">
+    <section className="relative z-10 bg-ivory border-y border-gold/20 shadow-sm">
       <div className="container-wide mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
         <div className="grid grid-cols-3 gap-4 sm:gap-8">
           {stats.map((stat, index) => (
@@ -81,15 +81,15 @@ export default function StatsBar() {
               className="text-center"
             >
               <div className="flex justify-center mb-2">
-                <stat.icon size={22} className="text-gold" />
+                <stat.icon size={22} className="text-gold-dark" />
               </div>
               <div
-                className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white"
+                className="text-3xl sm:text-4xl lg:text-5xl font-bold text-navy"
                 style={{ fontFamily: 'var(--font-heading)' }}
               >
                 <AnimatedCounter target={stat.value} suffix={stat.suffix} />
               </div>
-              <div className="text-xs sm:text-sm text-white/60 uppercase tracking-widest mt-1">
+              <div className="text-xs sm:text-sm text-slate font-medium uppercase tracking-widest mt-1">
                 {stat.label}
               </div>
             </motion.div>

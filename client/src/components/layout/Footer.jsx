@@ -9,8 +9,6 @@ const quickLinks = [
   { label: 'Venue', path: '/venue' },
   { label: 'Awards', path: '/awards' },
   { label: 'Schedule', path: '/schedule' },
-  { label: 'Team', path: '/team' },
-  { label: 'FAQ', path: '/faq' },
 ];
 
 const committees = [

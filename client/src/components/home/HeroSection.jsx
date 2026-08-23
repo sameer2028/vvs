@@ -41,17 +41,17 @@ function CountdownTimer({ targetDate }) {
         <div key={unit.label} className="flex items-center gap-3 sm:gap-4">
           <div className="text-center">
             <div
-              className="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy tabular-nums"
+              className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white drop-shadow-md tabular-nums"
               style={{ fontFamily: 'var(--font-heading)' }}
             >
               {String(unit.value).padStart(2, '0')}
             </div>
-            <div className="text-[10px] sm:text-xs text-slate uppercase tracking-wider mt-1">
+            <div className="text-[10px] sm:text-xs text-gold/80 font-medium uppercase tracking-wider mt-1">
               {unit.label}
             </div>
           </div>
           {i < units.length - 1 && (
-            <span className="text-xl text-gold/50 font-light -mt-4">:</span>
+            <span className="text-xl text-gold/60 font-light -mt-4">:</span>
           )}
         </div>
       ))}
@@ -77,10 +77,10 @@ export default function HeroSection() {
       `}</style>
       <section
         id="hero"
-        className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-ivory hero-bg"
+        className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-navy hero-bg"
       >
         {/* Semi-transparent overlay to ensure text is readable over the image */}
-        <div className="absolute inset-0 bg-navy/10 backdrop-blur-[1px]" />
+        <div className="absolute inset-0 bg-navy/40 backdrop-blur-[0.5px]" />
 
         {/* Gold accent line at top */}
         <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-gold to-transparent" />
@@ -95,7 +95,7 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mb-6"
             >
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-gold-subtle text-gold-dark text-xs font-semibold tracking-[0.15em] uppercase rounded-full">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-gold/15 text-gold border border-gold/30 text-xs font-semibold tracking-[0.15em] uppercase rounded-full backdrop-blur-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
                 26–27 September 2026
               </span>
@@ -106,7 +106,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-navy leading-[1.1] tracking-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] tracking-tight drop-shadow-lg"
               style={{ fontFamily: 'var(--font-heading)' }}
             >
               Vasant Vaani
@@ -123,7 +123,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-6 text-lg sm:text-xl lg:text-2xl text-slate font-light italic"
+              className="mt-6 text-lg sm:text-xl lg:text-2xl text-white/90 font-light italic drop-shadow"
               style={{ fontFamily: 'var(--font-heading)' }}
             >
               "Where Voices Become Leaders."
@@ -134,13 +134,13 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-sm text-slate"
+              className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-sm text-white/80"
             >
               <span className="flex items-center gap-1.5">
                 <Calendar size={15} className="text-gold" />
                 26–27 September 2026
               </span>
-              <span className="hidden sm:block w-1 h-1 rounded-full bg-border" />
+              <span className="hidden sm:block w-1 h-1 rounded-full bg-white/30" />
               <span className="flex items-center gap-1.5">
                 <MapPin size={15} className="text-gold" />
                 Vasant Kanya Mahavidyalaya, Varanasi
@@ -162,7 +162,7 @@ export default function HeroSection() {
                 View Brochure
                 <Download size={18} />
               </Button>
-              <Button to="/committees" size="lg" variant="outline" id="hero-explore-btn">
+              <Button to="/committees" size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10" id="hero-explore-btn">
                 Explore Committees
               </Button>
             </motion.div>
@@ -172,9 +172,9 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-14 pt-10 border-t border-border"
+              className="mt-14 pt-10 border-t border-white/15"
             >
-              <p className="text-xs font-medium tracking-[0.2em] uppercase text-slate mb-4">
+              <p className="text-xs font-medium tracking-[0.2em] uppercase text-gold/80 mb-4">
                 Countdown to VVS 2.0
               </p>
               <div className="flex justify-center">
@@ -185,7 +185,7 @@ export default function HeroSection() {
         </div>
 
         {/* Bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-ivory to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-navy via-navy/60 to-transparent" />
       </section>
     </>
   );
