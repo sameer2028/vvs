@@ -92,8 +92,8 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mb-6"
             >
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-gold/15 text-gold border border-gold/30 text-xs font-semibold tracking-[0.15em] uppercase rounded-full backdrop-blur-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+              <span className="inline-flex items-center gap-2 px-4.5 py-1.5 bg-[#2c72b8]/30 text-[#93c5fd] border border-[#2c72b8]/70 text-xs sm:text-sm font-bold tracking-[0.18em] uppercase rounded-full shadow-md backdrop-blur-md">
+                <span className="w-2 h-2 rounded-full bg-[#60a5fa] animate-pulse" />
                 26–27 September 2026
               </span>
             </motion.div>
@@ -147,13 +147,13 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-sm text-white/80"
             >
-              <span className="flex items-center gap-1.5">
-                <Calendar size={15} className="text-gold" />
+              <span className="flex items-center gap-1.5 font-semibold text-white">
+                <Calendar size={16} className="text-[#60a5fa]" />
                 26–27 September 2026
               </span>
-              <span className="hidden sm:block w-1 h-1 rounded-full bg-white/30" />
-              <span className="flex items-center gap-1.5">
-                <MapPin size={15} className="text-gold" />
+              <span className="hidden sm:block w-1 h-1 rounded-full bg-white/40" />
+              <span className="flex items-center gap-1.5 font-semibold text-white">
+                <MapPin size={16} className="text-[#60a5fa]" />
                 Vasant Kanya Mahavidyalaya, Varanasi
               </span>
             </motion.div>
