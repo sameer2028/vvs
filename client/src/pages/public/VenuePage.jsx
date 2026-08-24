@@ -121,7 +121,7 @@ export default function VenuePage() {
         <div className="container-wide venue-hero-grid">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65 }} className="venue-hero-copy">
             <span className="venue-eyebrow"><MapPin size={14} /> Official Conference Venue</span>
-            <h1>Vasant Kanya<br /><em>Mahavidyalaya</em></h1>
+            <h1>Vasant Kanya<br /><span className="text-[#c69a4a] italic font-serif">Mahavidyalaya</span></h1>
             <p className="venue-location"><MapPin size={18} /> Kammacha, Varanasi, Uttar Pradesh — 221010</p>
             <div className="venue-date-card">
               <span className="venue-icon-circle"><Calendar size={20} /></span>

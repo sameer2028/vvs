@@ -98,7 +98,7 @@ export default function AboutPage() {
                 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#14284b] leading-[1.08]"
                 style={{ fontFamily: 'var(--font-heading, "Playfair Display", Georgia, serif)' }}
               >
-                About VVS
+                About <span className="text-[#c69a4a] italic font-serif">VVS</span>
               </h1>
 
               {/* Subtitle */}
