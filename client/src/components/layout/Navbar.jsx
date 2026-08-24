@@ -75,7 +75,7 @@ export default function Navbar() {
                     isActive
                       ? isTransparentHero
                         ? 'text-navy bg-gold font-bold shadow-sm'
-                        : 'text-gold bg-gold-subtle font-semibold'
+                        : 'text-white bg-navy font-semibold shadow-sm'
                       : isTransparentHero
                         ? 'text-white/90 hover:text-white hover:bg-white/15'
                         : 'text-slate-dark hover:text-navy hover:bg-surface'
@@ -94,9 +94,9 @@ export default function Navbar() {
               onClick={handleNavClick}
               id="nav-register-btn"
               className={`px-6 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 active:scale-[0.98] ${
-                isTransparentHero
-                  ? 'bg-gold text-navy hover:bg-gold-light shadow-[0_2px_12px_rgba(212,175,55,0.4)] font-bold'
-                  : 'bg-navy text-white hover:bg-navy-light shadow-[0_2px_8px_rgba(27,42,74,0.2)]'
+                 isTransparentHero
+                   ? 'bg-gold text-navy hover:bg-gold-light shadow-[0_2px_12px_rgba(212,175,55,0.4)] font-bold'
+                   : 'bg-navy text-white hover:bg-navy-light shadow-[0_2px_8px_rgba(27,42,74,0.2)]'
               }`}
             >
               Register Now
@@ -146,7 +146,7 @@ export default function Navbar() {
                       isActive
                         ? isTransparentHero
                           ? 'text-navy bg-gold font-bold'
-                          : 'text-gold bg-gold-subtle font-semibold'
+                          : 'text-white bg-navy font-semibold'
                         : isTransparentHero
                           ? 'text-white/90 hover:text-white hover:bg-white/10'
                           : 'text-slate-dark hover:text-navy hover:bg-surface'
@@ -156,6 +156,7 @@ export default function Navbar() {
                   {link.label}
                 </NavLink>
               ))}
+
               <div className={`pt-3 border-t mt-3 space-y-2 ${isTransparentHero ? 'border-white/10' : 'border-border'}`}>
                 <Link
                   to="/register"

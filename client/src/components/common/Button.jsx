@@ -6,7 +6,8 @@ const variants = {
   secondary:
     'bg-white text-navy border border-border hover:border-navy/20 hover:bg-surface shadow-[var(--shadow-card)]',
   gold:
-    'bg-gold text-navy hover:bg-gold-light shadow-[0_2px_8px_rgba(184,148,62,0.3)]',
+    'bg-gold text-white hover:bg-gold-light shadow-[0_2px_8px_rgba(44,114,184,0.3)]',
+
   ghost:
     'text-navy hover:bg-surface',
   outline:

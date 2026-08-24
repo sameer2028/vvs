@@ -97,46 +97,22 @@ export default function CartographicArrivalMap() {
   const directionsUrl = 'https://maps.google.com/?q=Vasant+Kanya+Mahavidyalaya+Kammacha+Varanasi';
 
   return (
-    <section
-      className="py-14 sm:py-20 px-4 sm:px-8 lg:px-16"
-      style={{ background: '#f3ede0', fontFamily: 'var(--font-body, Georgia, serif)' }}
-    >
+    <section className="venue-map-section section-padding" style={{ background: '#f5f8fc' }}>
       {/* ── Header ──────────────────────────────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0, y: 18 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.55 }}
-        className="text-center mb-8 sm:mb-12"
+        className="venue-section-heading"
       >
-        <p
-          className="text-xs font-bold uppercase tracking-[0.35em] mb-3"
-          style={{ color: '#c9a84c', letterSpacing: '0.35em' }}
-        >
-          Venue
-        </p>
-        <h2
-          className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4"
-          style={{ fontFamily: 'var(--font-heading, "Palatino Linotype", Georgia, serif)', color: '#1a2744', letterSpacing: '-0.01em' }}
-        >
-          Find Your Way to VVS
-        </h2>
-        {/* Gold ornament divider */}
-        <div className="flex items-center justify-center gap-3 mb-5">
-          <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#c9a84c]" />
-          <span style={{ color: '#c9a84c', fontSize: 18 }}>✦</span>
-          <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#c9a84c]" />
-        </div>
-        <p
-          className="text-lg sm:text-xl font-semibold"
-          style={{ color: '#1a2744' }}
-        >
-          Vasant Kanya Mahavidyalaya,
-        </p>
-        <p className="text-base sm:text-lg" style={{ color: '#4a5568' }}>
-          Kammachha, Varanasi
+        <span className="venue-section-label">Interactive Map</span>
+        <h2>Find Your Way to VVS</h2>
+        <p className="max-w-xl mx-auto" style={{ color: 'var(--venue-muted)' }}>
+          Vasant Kanya Mahavidyalaya, Kammachha, Varanasi
         </p>
       </motion.div>
+
 
       {/* ── Map Canvas ──────────────────────────────────────────────────── */}
       <motion.div
@@ -375,18 +351,18 @@ export default function CartographicArrivalMap() {
               {LANDMARKS.map(lm => {
                 const isLeft = lm.px < 350;
                 const isRight = lm.px > 580;
-                
+
                 const width = 240;
                 const height = 90;
-                
+
                 // Base coordinates (centered horizontally and vertically on dot)
                 let x = lm.px - width / 2;
                 let y = lm.py - height / 2;
-                
+
                 // Adjust based on side
                 if (isLeft) x = lm.px - 10;
                 else if (isRight) x = lm.px - width + 10;
-                
+
                 if (lm.textSide === 'top') {
                   y = lm.py - height + 10;
                 }
