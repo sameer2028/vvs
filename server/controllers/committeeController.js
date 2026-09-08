@@ -1,5 +1,6 @@
 import Committee from '../models/Committee.js';
 import Portfolio from '../models/Portfolio.js';
+import BoardMember from '../models/BoardMember.js';
 
 // @desc    Get all active committees
 // @route   GET /api/committees
@@ -13,7 +14,7 @@ export const getCommittees = async (req, res) => {
   }
 };
 
-// @desc    Get committee by slug with portfolios
+// @desc    Get committee by slug with portfolios and board members
 // @route   GET /api/committees/:slug
 // @access  Public
 export const getCommitteeBySlug = async (req, res) => {
@@ -24,14 +25,15 @@ export const getCommitteeBySlug = async (req, res) => {
       return res.status(404).json({ message: 'Committee not found' });
     }
 
-    const portfolios = await Portfolio.find({ 
-      committeeId: committee._id, 
-      isActive: true 
-    }).sort({ name: 1 });
+    const [portfolios, boardMembers] = await Promise.all([
+      Portfolio.find({ committeeId: committee._id, isActive: true }).sort({ name: 1 }),
+      BoardMember.find({ committeeId: committee._id }).sort({ order: 1, createdAt: 1 })
+    ]);
 
     res.json({
       ...committee._doc,
-      portfolios
+      portfolios,
+      boardMembers
     });
   } catch (error) {
     res.status(500).json({ message: 'Server error fetching committee details' });

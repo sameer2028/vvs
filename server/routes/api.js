@@ -9,6 +9,7 @@ import adminRoutes from './adminRoutes.js';
 import uploadRoutes from './uploadRoutes.js';
 import delegateRoutes from './delegateRoutes.js';
 import analyticsRoutes from './analyticsRoutes.js';
+import boardMemberRoutes from './boardMemberRoutes.js';
 
 const router = express.Router();
 
@@ -22,6 +23,7 @@ router.use('/admin', adminRoutes);
 router.use('/upload', uploadRoutes);
 router.use('/delegate', delegateRoutes);
 router.use('/analytics', analyticsRoutes);
+router.use('/board-members', boardMemberRoutes);
 
 export default router;
 

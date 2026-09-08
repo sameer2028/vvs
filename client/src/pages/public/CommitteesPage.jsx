@@ -215,7 +215,7 @@ export default function CommitteesPage() {
 
                           <h3
                             className="text-xl font-bold text-[#14284b] mb-3 group-hover:text-[#2c72b8] transition-colors"
-                            style={{ fontFamily: 'var(--font-heading, Georgia, serif)' }}
+                            style={{ fontFamily: 'var(--font-detail, "Outfit", sans-serif)' }}
                           >
                             {committee.name}
                           </h3>

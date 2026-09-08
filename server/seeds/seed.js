@@ -77,14 +77,14 @@ const seedData = async () => {
 
     // Create Super Admin
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash('admin123', salt);
+    const hashedPassword = await bcrypt.hash('Sameer@1234', salt);
     await Admin.create({
       name: 'VVS Organizer',
       email: 'admin@vvs.com',
       password: hashedPassword,
       role: 'super_admin'
     });
-    console.log('✅ Super Admin created (admin@vvs.com / admin123)');
+    console.log('✅ Super Admin created (admin@vvs.com / Sameer@1234)');
 
     // Create Committees and Portfolios
     for (const cData of committees) {

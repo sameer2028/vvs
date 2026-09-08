@@ -16,9 +16,8 @@ function AccordionItem({ question, answer, isOpen, onClick }) {
         </span>
         <ChevronDown
           size={18}
-          className={`text-slate shrink-0 transition-transform duration-300 ${
-            isOpen ? 'rotate-180 text-gold' : ''
-          }`}
+          className={`text-slate shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-gold' : ''
+            }`}
         />
       </button>
       <AnimatePresence>
@@ -51,7 +50,7 @@ export default function FaqPage() {
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include',  credentials: 'include' });
+        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include', credentials: 'include' });
         const data = await response.json();
         // Sort by order if available
         const sortedFaqs = (data.faqs || []).sort((a, b) => (a.order || 0) - (b.order || 0));

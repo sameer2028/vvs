@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Users } from 'lucide-react';
+import { Plus, Edit2, Trash2, Users, Upload, X, UserCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function CommitteesManager() {
@@ -18,6 +18,15 @@ export default function CommitteesManager() {
     description: '',
     agenda: ''
   });
+
+  // Board Members state
+  const [boardModalOpen, setBoardModalOpen] = useState(false);
+  const [boardCommittee, setBoardCommittee] = useState(null);
+  const [boardMembers, setBoardMembers] = useState([]);
+  const [boardLoading, setBoardLoading] = useState(false);
+  const [boardForm, setBoardForm] = useState({ name: '', post: '', photoUrl: '', order: 0 });
+  const [editingMember, setEditingMember] = useState(null);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   const fetchCommittees = async () => {
     try {
@@ -112,6 +121,79 @@ export default function CommitteesManager() {
     }
   };
 
+  // ── Board Member Handlers ──────────────────────────────────
+  const openBoardModal = async (committee) => {
+    setBoardCommittee(committee);
+    setBoardModalOpen(true);
+    setBoardLoading(true);
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/board-members/${committee._id}`, { credentials: 'include' });
+      if (res.ok) setBoardMembers(await res.json());
+    } catch { setBoardMembers([]); }
+    finally { setBoardLoading(false); }
+  };
+
+  const closeBoardModal = () => {
+    setBoardModalOpen(false);
+    setBoardCommittee(null);
+    setBoardMembers([]);
+    setEditingMember(null);
+    setBoardForm({ name: '', post: '', photoUrl: '', order: 0 });
+  };
+
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploadingPhoto(true);
+    try {
+      const fd = new FormData();
+      fd.append('image', file);
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/upload`, {
+        method: 'POST', body: fd, credentials: 'include'
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setBoardForm(prev => ({ ...prev, photoUrl: data.url }));
+      } else { alert('Upload failed'); }
+    } catch { alert('Upload error'); }
+    finally { setUploadingPhoto(false); }
+  };
+
+  const handleBoardSubmit = async (e) => {
+    e.preventDefault();
+    if (!boardCommittee) return;
+    try {
+      const url = editingMember
+        ? `${import.meta.env.VITE_API_URL || ''}/api/board-members/${editingMember._id}`
+        : `${import.meta.env.VITE_API_URL || ''}/api/board-members`;
+      const method = editingMember ? 'PUT' : 'POST';
+      const payload = { ...boardForm, committeeId: boardCommittee._id, order: Number(boardForm.order) };
+      const res = await fetch(url, {
+        method, headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload), credentials: 'include'
+      });
+      if (!res.ok) throw new Error('Failed');
+      // Refresh list
+      const listRes = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/board-members/${boardCommittee._id}`, { credentials: 'include' });
+      if (listRes.ok) setBoardMembers(await listRes.json());
+      setEditingMember(null);
+      setBoardForm({ name: '', post: '', photoUrl: '', order: 0 });
+    } catch (err) { alert(err.message); }
+  };
+
+  const handleBoardEdit = (member) => {
+    setEditingMember(member);
+    setBoardForm({ name: member.name, post: member.post, photoUrl: member.photoUrl || '', order: member.order || 0 });
+  };
+
+  const handleBoardDelete = async (id) => {
+    if (!window.confirm('Delete this board member?')) return;
+    try {
+      await fetch(`${import.meta.env.VITE_API_URL || ''}/api/board-members/${id}`, { method: 'DELETE', credentials: 'include' });
+      setBoardMembers(prev => prev.filter(m => m._id !== id));
+    } catch { alert('Delete failed'); }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -166,14 +248,21 @@ export default function CommitteesManager() {
                   {committee.description || 'No description provided.'}
                 </p>
               </div>
-              <div className="p-4 border-t border-border bg-surface flex justify-between items-center">
+              <div className="p-4 border-t border-border bg-surface flex justify-between items-center gap-2">
                 <Link 
                   to={`/admin/committees/${committee._id}/portfolios`}
                   className="flex items-center gap-2 text-sm font-medium text-navy hover:text-gold transition-colors"
                 >
                   <Users size={16} />
-                  Manage Portfolios &rarr;
+                  Portfolios &rarr;
                 </Link>
+                <button
+                  onClick={() => openBoardModal(committee)}
+                  className="flex items-center gap-1.5 text-sm font-medium text-[#2c72b8] hover:text-[#14284b] transition-colors"
+                >
+                  <UserCircle size={16} />
+                  Board
+                </button>
               </div>
             </div>
           ))}
@@ -283,6 +372,103 @@ export default function CommitteesManager() {
               >
                 {editingCommittee ? 'Save Changes' : 'Create Committee'}
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Board Members Modal ───────────────────────────────── */}
+      {boardModalOpen && boardCommittee && (
+        <div className="fixed inset-0 bg-navy/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div className="px-6 py-4 border-b border-border flex justify-between items-center">
+              <h2 className="text-lg font-bold text-navy" style={{ fontFamily: 'var(--font-heading)' }}>
+                Board Members — {boardCommittee.name}
+              </h2>
+              <button onClick={closeBoardModal} className="text-slate hover:text-error transition-colors">
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-6 space-y-5">
+              {/* Add / Edit Form */}
+              <form onSubmit={handleBoardSubmit} className="bg-surface rounded-xl border border-border p-4 space-y-3">
+                <p className="text-sm font-semibold text-navy">
+                  {editingMember ? 'Edit Member' : 'Add New Member'}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <input
+                    type="text" required placeholder="Name"
+                    value={boardForm.name}
+                    onChange={(e) => setBoardForm({ ...boardForm, name: e.target.value })}
+                    className="px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-gold bg-white text-sm"
+                  />
+                  <input
+                    type="text" required placeholder="Post (e.g. Chairperson)"
+                    value={boardForm.post}
+                    onChange={(e) => setBoardForm({ ...boardForm, post: e.target.value })}
+                    className="px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-gold bg-white text-sm"
+                  />
+                </div>
+                <div className="flex items-center gap-3">
+                  <label className="flex items-center gap-2 px-3 py-2 border border-border rounded-lg bg-white cursor-pointer hover:bg-surface transition-colors text-sm">
+                    <Upload size={14} className="text-slate" />
+                    {uploadingPhoto ? 'Uploading...' : 'Photo'}
+                    <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} disabled={uploadingPhoto} />
+                  </label>
+                  {boardForm.photoUrl && (
+                    <img src={boardForm.photoUrl} alt="Preview" className="w-12 h-14 rounded-lg object-cover border border-border shadow-sm" />
+                  )}
+                  <input
+                    type="number" placeholder="Order" min="0"
+                    value={boardForm.order}
+                    onChange={(e) => setBoardForm({ ...boardForm, order: e.target.value })}
+                    className="w-20 px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-gold bg-white text-sm"
+                  />
+                  <div className="flex-1" />
+                  {editingMember && (
+                    <button type="button" onClick={() => { setEditingMember(null); setBoardForm({ name: '', post: '', photoUrl: '', order: 0 }); }}
+                      className="text-xs text-slate hover:text-error">Cancel</button>
+                  )}
+                  <button type="submit" className="px-4 py-2 bg-navy text-white rounded-lg text-sm font-medium hover:bg-navy-light transition-colors">
+                    {editingMember ? 'Update' : 'Add'}
+                  </button>
+                </div>
+              </form>
+
+              {/* Members List */}
+              {boardLoading ? (
+                <div className="flex justify-center py-6">
+                  <div className="w-6 h-6 border-3 border-gold border-t-transparent rounded-full animate-spin" />
+                </div>
+              ) : boardMembers.length === 0 ? (
+                <p className="text-center text-slate text-sm py-4">No board members added yet.</p>
+              ) : (
+                <div className="space-y-2">
+                  {boardMembers.map((m) => (
+                    <div key={m._id} className="flex items-center gap-3 bg-white border border-border rounded-lg p-3">
+                      <div className="w-10 h-12 rounded-lg bg-surface border border-border-light flex items-center justify-center overflow-hidden flex-shrink-0">
+                        {m.photoUrl ? (
+                          <img src={m.photoUrl} alt={m.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <UserCircle size={20} className="text-slate-light" />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-navy truncate">{m.name}</p>
+                        <p className="text-xs text-gold">{m.post}</p>
+                      </div>
+                      <span className="text-xs text-slate-light">#{m.order || 0}</span>
+                      <button onClick={() => handleBoardEdit(m)} className="p-1.5 text-slate hover:text-navy bg-surface hover:bg-border rounded transition-colors">
+                        <Edit2 size={13} />
+                      </button>
+                      <button onClick={() => handleBoardDelete(m._id)} className="p-1.5 text-slate hover:text-error bg-surface hover:bg-error/10 rounded transition-colors">
+                        <Trash2 size={13} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
