@@ -3,9 +3,19 @@ import bcrypt from 'bcryptjs';
 import Admin from '../models/Admin.js';
 import Registration from '../models/Registration.js';
 
-const generateToken = (id, role) => {
+// Session durations
+const ADMIN_SESSION_HOURS = 1;
+const DELEGATE_SESSION_DAYS = 30;
+
+const generateAdminToken = (id, role) => {
   return jwt.sign({ id, role }, process.env.JWT_SECRET, {
-    expiresIn: '30d'
+    expiresIn: `${ADMIN_SESSION_HOURS}h`
+  });
+};
+
+const generateDelegateToken = (id, role) => {
+  return jwt.sign({ id, role }, process.env.JWT_SECRET, {
+    expiresIn: `${DELEGATE_SESSION_DAYS}d`
   });
 };
 
@@ -25,12 +35,12 @@ export const adminLogin = async (req, res) => {
 
       // Set cookie
       const isProd = process.env.NODE_ENV === 'production';
-      const token = generateToken(admin._id, admin.role);
+      const token = generateAdminToken(admin._id, admin.role);
       res.cookie('admin_token', token, {
         httpOnly: true,
         secure: isProd,
         sameSite: isProd ? 'none' : 'lax',
-        maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+        maxAge: ADMIN_SESSION_HOURS * 60 * 60 * 1000 // 1 hour
       });
 
       res.json({
@@ -62,12 +72,12 @@ export const delegateLogin = async (req, res) => {
     if (registration && (await bcrypt.compare(password, registration.password))) {
       // Delegate token
       const isProd = process.env.NODE_ENV === 'production';
-      const token = generateToken(registration._id, 'delegate');
+      const token = generateDelegateToken(registration._id, 'delegate');
       res.cookie('delegate_token', token, {
         httpOnly: true,
         secure: isProd,
         sameSite: isProd ? 'none' : 'lax',
-        maxAge: 30 * 24 * 60 * 60 * 1000
+        maxAge: DELEGATE_SESSION_DAYS * 24 * 60 * 60 * 1000
       });
 
       res.json({
