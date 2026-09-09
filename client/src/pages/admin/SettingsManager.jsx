@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Save, Plus, Trash2, Settings, MessageCircleQuestion, Bell, Users, Image as ImageIcon, Upload } from 'lucide-react';
+import { adminFetch } from '../../utils/adminFetch';
 
 export default function SettingsManager() {
   const [activeTab, setActiveTab] = useState('general');
@@ -14,7 +15,7 @@ export default function SettingsManager() {
 
   const fetchSettings = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, { credentials: 'include' });
+      const response = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`);
       if (!response.ok) throw new Error('Failed to fetch settings');
       const data = await response.json();
       
@@ -40,10 +41,9 @@ export default function SettingsManager() {
         gallery: (settings.gallery || []).filter(item => item.imageUrl && item.imageUrl.trim() !== '')
       };
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, {
+      const response = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/settings`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
         body: JSON.stringify(cleanedSettings)
       });
       
@@ -114,7 +114,7 @@ export default function SettingsManager() {
     formData.append('image', file);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/upload`, { credentials: 'include', 
+      const response = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/upload`, {
         method: 'POST',
         body: formData
       });
@@ -139,8 +139,7 @@ export default function SettingsManager() {
       const uploadPromises = files.map(async (file) => {
         const formData = new FormData();
         formData.append('image', file);
-        const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/upload`, {
-          credentials: 'include',
+        const res = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/upload`, {
           method: 'POST',
           body: formData
         });

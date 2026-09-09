@@ -24,6 +24,7 @@ export function AuthProvider({ children }) {
   const logout = useCallback(() => {
     setUser(null);
     localStorage.removeItem('vvs_admin');
+    localStorage.removeItem('vvs_admin_token');
     localStorage.removeItem('vvs_admin_login_time');
     fetch(`${import.meta.env.VITE_API_URL || ''}/api/auth/admin/logout`, { credentials: 'include', method: 'POST' }).catch(err => console.error(err));
   }, []);
@@ -35,6 +36,7 @@ export function AuthProvider({ children }) {
       if (isAdminSessionExpired()) {
         // Session expired — clean up
         localStorage.removeItem('vvs_admin');
+        localStorage.removeItem('vvs_admin_token');
         localStorage.removeItem('vvs_admin_login_time');
       } else {
         setUser(JSON.parse(storedUser));
@@ -50,7 +52,6 @@ export function AuthProvider({ children }) {
   // Periodic session expiry check — auto-logout when time is up
   useEffect(() => {
     if (!user) {
-      // No admin logged in, clear any existing interval
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
@@ -72,14 +73,31 @@ export function AuthProvider({ children }) {
     };
   }, [user, isAdminSessionExpired, logout]);
 
-  // Admin login — store user data + login timestamp
-  const login = (userData) => {
+  // Admin login — store user data + token + login timestamp
+  const login = (userData, token) => {
     setUser(userData);
     localStorage.setItem('vvs_admin', JSON.stringify(userData));
+    if (token) {
+      localStorage.setItem('vvs_admin_token', token);
+    }
     localStorage.setItem('vvs_admin_login_time', Date.now().toString());
   };
 
-  // Delegate login/logout (unchanged — delegates keep 30-day sessions)
+  // Helper: fetch with admin auth token (fixes cross-origin cookie issues)
+  const adminFetch = useCallback((url, options = {}) => {
+    const token = localStorage.getItem('vvs_admin_token');
+    const headers = { ...(options.headers || {}) };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return fetch(url, {
+      ...options,
+      credentials: 'include', // still try cookies as backup
+      headers
+    });
+  }, []);
+
+  // Delegate login/logout (unchanged — delegates keep 30-day sessions via cookies)
   const delegateLogin = (delegateData) => {
     setDelegate(delegateData);
     localStorage.setItem('vvs_delegate', JSON.stringify(delegateData));
@@ -92,7 +110,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, delegate, loading, login, logout, delegateLogin, delegateLogout }}>
+    <AuthContext.Provider value={{ user, delegate, loading, login, logout, delegateLogin, delegateLogout, adminFetch }}>
       {children}
     </AuthContext.Provider>
   );

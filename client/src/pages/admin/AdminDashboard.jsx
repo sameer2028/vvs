@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Users, FileText, CheckCircle, Clock, Eye, Globe, Activity, TrendingUp } from 'lucide-react';
 import StatCard from '../../components/admin/StatCard';
 import { useAuth } from '../../context/AuthContext';
+import { adminFetch } from '../../utils/adminFetch';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
@@ -22,7 +23,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/dashboard`, { credentials: 'include' });
+        const response = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/dashboard`);
         if (!response.ok) throw new Error('Failed to fetch dashboard stats');
         const data = await response.json();
         setStats(data);

@@ -6,32 +6,36 @@ export const protect = async (req, res, next) => {
   let token;
   const isDelegateRoute = req.originalUrl.includes('/delegate') || req.originalUrl.includes('/upload/payment');
 
+  // 1. Try cookies first
   if (isDelegateRoute) {
     token = req.cookies.delegate_token;
   } else {
     token = req.cookies.admin_token;
   }
 
-  if (token) {
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-      if (decoded.role === 'delegate') {
-        req.user = await Registration.findById(decoded.id).select('-password');
-        req.user.role = 'delegate';
-      } else {
-        req.user = await Admin.findById(decoded.id).select('-password');
-      }
-
-      next();
-    } catch (error) {
-      console.error(error);
-      res.status(401).json({ message: 'Not authorized, token failed' });
-    }
+  // 2. Fallback to Authorization: Bearer header (fixes cross-origin cookie issues)
+  if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
   }
 
   if (!token) {
-    res.status(401).json({ message: 'Not authorized, no token' });
+    return res.status(401).json({ message: 'Not authorized, no token' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (decoded.role === 'delegate') {
+      req.user = await Registration.findById(decoded.id).select('-password');
+      req.user.role = 'delegate';
+    } else {
+      req.user = await Admin.findById(decoded.id).select('-password');
+    }
+
+    next();
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ message: 'Not authorized, token failed' });
   }
 };
 

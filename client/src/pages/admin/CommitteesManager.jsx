@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Users, Upload, X, UserCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { adminFetch } from '../../utils/adminFetch';
 
 export default function CommitteesManager() {
   const [committees, setCommittees] = useState([]);
@@ -30,7 +31,7 @@ export default function CommitteesManager() {
 
   const fetchCommittees = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/committees`, { credentials: 'include',  credentials: 'include' });
+      const response = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/committees`);
       if (!response.ok) throw new Error('Failed to fetch committees');
       const data = await response.json();
       setCommittees(data);
@@ -89,7 +90,7 @@ export default function CommitteesManager() {
       
       const payload = { ...formData, capacity: Number(formData.capacity) };
 
-      const response = await fetch(url, {
+      const response = await adminFetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -113,7 +114,7 @@ export default function CommitteesManager() {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/committees/${id}`, { credentials: 'include',  method: 'DELETE' });
+      const response = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/committees/${id}`, { method: 'DELETE' });
       if (!response.ok) throw new Error('Failed to delete committee');
       setCommittees(committees.filter(c => c._id !== id));
     } catch (err) {
@@ -127,7 +128,7 @@ export default function CommitteesManager() {
     setBoardModalOpen(true);
     setBoardLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/board-members/${committee._id}`, { credentials: 'include' });
+      const res = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/board-members/${committee._id}`);
       if (res.ok) setBoardMembers(await res.json());
     } catch { setBoardMembers([]); }
     finally { setBoardLoading(false); }
@@ -148,8 +149,8 @@ export default function CommitteesManager() {
     try {
       const fd = new FormData();
       fd.append('image', file);
-      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/upload`, {
-        method: 'POST', body: fd, credentials: 'include'
+      const res = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/upload`, {
+        method: 'POST', body: fd
       });
       if (res.ok) {
         const data = await res.json();
@@ -168,13 +169,13 @@ export default function CommitteesManager() {
         : `${import.meta.env.VITE_API_URL || ''}/api/board-members`;
       const method = editingMember ? 'PUT' : 'POST';
       const payload = { ...boardForm, committeeId: boardCommittee._id, order: Number(boardForm.order) };
-      const res = await fetch(url, {
+      const res = await adminFetch(url, {
         method, headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload), credentials: 'include'
+        body: JSON.stringify(payload)
       });
       if (!res.ok) throw new Error('Failed');
       // Refresh list
-      const listRes = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/board-members/${boardCommittee._id}`, { credentials: 'include' });
+      const listRes = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/board-members/${boardCommittee._id}`);
       if (listRes.ok) setBoardMembers(await listRes.json());
       setEditingMember(null);
       setBoardForm({ name: '', post: '', photoUrl: '', order: 0 });
@@ -189,7 +190,7 @@ export default function CommitteesManager() {
   const handleBoardDelete = async (id) => {
     if (!window.confirm('Delete this board member?')) return;
     try {
-      await fetch(`${import.meta.env.VITE_API_URL || ''}/api/board-members/${id}`, { method: 'DELETE', credentials: 'include' });
+      await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/board-members/${id}`, { method: 'DELETE' });
       setBoardMembers(prev => prev.filter(m => m._id !== id));
     } catch { alert('Delete failed'); }
   };

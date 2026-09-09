@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { CheckCircle, Search, Filter, Download } from 'lucide-react';
+import { adminFetch } from '../../utils/adminFetch';
 
 export default function AllocationsManager() {
   const [delegates, setDelegates] = useState([]);
@@ -23,13 +24,13 @@ export default function AllocationsManager() {
     setIsLoading(true);
     try {
       // Fetch delegates needing allocation or already allocated
-      const delRes = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/allocations`, { credentials: 'include',  credentials: 'include' });
+      const delRes = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/allocations`);
       if (!delRes.ok) throw new Error('Failed to fetch allocations');
       const delData = await delRes.json();
       setDelegates(delData);
 
       // Fetch all active committees
-      const comRes = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/committees`, { credentials: 'include',  credentials: 'include' });
+      const comRes = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/committees`);
       if (!comRes.ok) throw new Error('Failed to fetch committees');
       const comData = await comRes.json();
       setCommittees(comData);
@@ -50,7 +51,7 @@ export default function AllocationsManager() {
 
   const fetchPortfolios = async (committeeId) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/portfolios?committeeId=${committeeId}`, { credentials: 'include',  credentials: 'include' });
+      const res = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/portfolios?committeeId=${committeeId}`);
       if (!res.ok) throw new Error('Failed to fetch portfolios');
       const data = await res.json();
       setPortfolios(prev => ({ ...prev, [committeeId]: data }));
@@ -76,7 +77,7 @@ export default function AllocationsManager() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/allocations/${selectedDelegate._id}`, { credentials: 'include', 
+      const res = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/allocations/${selectedDelegate._id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

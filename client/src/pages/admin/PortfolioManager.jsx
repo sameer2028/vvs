@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Plus, Edit2, Trash2, ArrowLeft } from 'lucide-react';
+import { adminFetch } from '../../utils/adminFetch';
 
 export default function PortfolioManager() {
   const { id } = useParams();
@@ -17,7 +18,7 @@ export default function PortfolioManager() {
     try {
       // We don't have a GET /api/committees/:id endpoint (only slug), so we'll fetch all and filter for now, 
       // or fetch the portfolios directly which populates the committee details.
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/portfolios?committeeId=${id}`, { credentials: 'include',  credentials: 'include' });
+      const response = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/portfolios?committeeId=${id}`);
       if (!response.ok) throw new Error('Failed to fetch portfolios');
       const data = await response.json();
       
@@ -27,7 +28,7 @@ export default function PortfolioManager() {
       } else {
         // Fallback: If no portfolios exist, we need the committee name.
         // Let's fetch all committees to find this one.
-        const commResponse = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/committees`, { credentials: 'include',  credentials: 'include' });
+        const commResponse = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/committees`);
         const commData = await commResponse.json();
         const found = commData.find(c => c._id === id);
         if (found) setCommittee(found);
@@ -71,7 +72,7 @@ export default function PortfolioManager() {
         committeeId: id
       };
 
-      const response = await fetch(url, {
+      const response = await adminFetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -90,7 +91,7 @@ export default function PortfolioManager() {
     if (!window.confirm(`Are you sure you want to delete ${name}?`)) return;
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/portfolios/${portfolioId}`, { credentials: 'include',  method: 'DELETE' });
+      const response = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/portfolios/${portfolioId}`, { method: 'DELETE' });
       if (!response.ok) throw new Error('Failed to delete portfolio');
       setPortfolios(portfolios.filter(p => p._id !== portfolioId));
     } catch (err) {

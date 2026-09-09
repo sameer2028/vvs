@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Check, X as XIcon, ExternalLink } from 'lucide-react';
+import { adminFetch } from '../../utils/adminFetch';
 
 export default function PaymentVerification() {
   const [payments, setPayments] = useState([]);
@@ -12,7 +13,7 @@ export default function PaymentVerification() {
 
   const fetchPendingPayments = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/payments/pending`, { credentials: 'include',  credentials: 'include' });
+      const response = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/payments/pending`);
       if (!response.ok) throw new Error('Failed to fetch pending payments');
       const data = await response.json();
       setPayments(data);
@@ -25,7 +26,7 @@ export default function PaymentVerification() {
 
   const handleVerify = async (paymentId, status) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/payments/${paymentId}/verify`, { credentials: 'include', 
+      const response = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/payments/${paymentId}/verify`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status, rejectionReason: status === 'rejected' ? 'Invalid screenshot or transaction ID' : '' })

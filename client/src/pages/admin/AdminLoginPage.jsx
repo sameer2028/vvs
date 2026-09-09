@@ -38,7 +38,7 @@ export default function AdminLoginPage() {
         name: data.name,
         email: data.email,
         role: data.role
-      });
+      }, data.token);
       navigate('/admin');
     } catch (err) {
       setError(err.message);

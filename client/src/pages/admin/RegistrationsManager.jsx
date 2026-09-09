@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Search, Filter, Eye, Download, X } from 'lucide-react';
+import { adminFetch } from '../../utils/adminFetch';
 
 export default function RegistrationsManager() {
   const [registrations, setRegistrations] = useState([]);
@@ -11,7 +12,7 @@ export default function RegistrationsManager() {
   useEffect(() => {
     const fetchRegistrations = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/registrations`, { credentials: 'include',  credentials: 'include' });
+        const response = await adminFetch(`${import.meta.env.VITE_API_URL || ''}/api/admin/registrations`);
         if (!response.ok) throw new Error('Failed to fetch registrations');
         const data = await response.json();
         setRegistrations(data);
