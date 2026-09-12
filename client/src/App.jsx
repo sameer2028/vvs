@@ -32,6 +32,7 @@ import CommitteesManager from './pages/admin/CommitteesManager';
 import PortfolioManager from './pages/admin/PortfolioManager';
 import AllocationsManager from './pages/admin/AllocationsManager';
 import SettingsManager from './pages/admin/SettingsManager';
+import AnalyticsPage from './pages/admin/AnalyticsPage';
 
 // Delegate Pages & Layouts
 import DelegateRoute from './components/auth/DelegateRoute';
@@ -69,6 +70,7 @@ function App() {
         {/* Protected Admin Routes */}
         <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
           <Route index element={<AdminDashboard />} />
+          <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="registrations" element={<RegistrationsManager />} />
           <Route path="payments" element={<PaymentVerification />} />
           <Route path="committees" element={<CommitteesManager />} />

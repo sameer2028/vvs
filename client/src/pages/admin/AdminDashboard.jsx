@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Users, FileText, CheckCircle, Clock, Eye, Globe, Activity, TrendingUp } from 'lucide-react';
+import { Users, FileText, CheckCircle, Clock, Eye, Globe, BarChart3, TrendingUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import StatCard from '../../components/admin/StatCard';
 import { useAuth } from '../../context/AuthContext';
 import { adminFetch } from '../../utils/adminFetch';
@@ -13,7 +14,6 @@ export default function AdminDashboard() {
     totalPageViews: 0,
     uniqueVisitors: 0,
     todayPageViews: 0,
-    topPages: [],
     recentRegistrations: []
   });
   const [isLoading, setIsLoading] = useState(true);
@@ -49,10 +49,6 @@ export default function AdminDashboard() {
     return <div className="text-error bg-error/10 p-4 rounded-xl">{error}</div>;
   }
 
-  const maxPageViews = stats.topPages && stats.topPages.length > 0
-    ? Math.max(...stats.topPages.map(p => p.count))
-    : 1;
-
   return (
     <div className="space-y-8">
       <div>
@@ -62,31 +58,55 @@ export default function AdminDashboard() {
         <p className="text-slate mt-1">Here's an overview of VVS 2.0 registrations and website traffic.</p>
       </div>
 
-      {/* Website Traffic Analytics Cards */}
-      <div>
-        <h2 className="text-xl font-bold text-navy mb-4 flex items-center gap-2">
-          <Activity className="w-5 h-5 text-gold" /> Website Traffic & Visitors
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <StatCard 
-            title="Total Page Views" 
-            value={stats.totalPageViews || 0} 
-            icon={Eye} 
-          />
-          <StatCard 
-            title="Unique Visitors" 
-            value={stats.uniqueVisitors || 0} 
-            icon={Globe} 
-          />
-          <StatCard 
-            title="Today's Page Views" 
-            value={stats.todayPageViews || 0} 
-            icon={TrendingUp} 
-            trend={stats.todayPageViews > 0 ? 'up' : null}
-            trendValue={stats.todayPageViews > 0 ? 'Active Today' : ''}
-          />
+      {/* Quick Traffic Glance + Link to Analytics */}
+      <Link
+        to="/admin/analytics"
+        className="block bg-gradient-to-r from-navy to-navy-light rounded-xl p-5 text-white shadow-sm hover:shadow-lg transition-all duration-300 group"
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-xl bg-white/10 group-hover:bg-white/20 transition-colors">
+              <BarChart3 className="w-6 h-6" />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold flex items-center gap-2">
+                Website Analytics
+                <span className="text-xs font-normal bg-white/15 px-2 py-0.5 rounded-full">Live</span>
+              </h2>
+              <p className="text-sm text-white/70 mt-0.5">View detailed traffic insights, page breakdowns & visitor trends</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-6">
+            <div className="text-right hidden sm:block">
+              <div className="flex items-center gap-2 text-white/60 text-xs">
+                <Eye className="w-3.5 h-3.5" /> Total Views
+              </div>
+              <div className="text-2xl font-bold" style={{ fontFamily: 'var(--font-heading)' }}>
+                {(stats.totalPageViews || 0).toLocaleString()}
+              </div>
+            </div>
+            <div className="text-right hidden md:block">
+              <div className="flex items-center gap-2 text-white/60 text-xs">
+                <Globe className="w-3.5 h-3.5" /> Visitors
+              </div>
+              <div className="text-2xl font-bold" style={{ fontFamily: 'var(--font-heading)' }}>
+                {(stats.uniqueVisitors || 0).toLocaleString()}
+              </div>
+            </div>
+            <div className="text-right hidden lg:block">
+              <div className="flex items-center gap-2 text-white/60 text-xs">
+                <TrendingUp className="w-3.5 h-3.5" /> Today
+              </div>
+              <div className="text-2xl font-bold" style={{ fontFamily: 'var(--font-heading)' }}>
+                {(stats.todayPageViews || 0).toLocaleString()}
+              </div>
+            </div>
+            <div className="text-white/40 group-hover:text-white group-hover:translate-x-1 transition-all text-xl">
+              →
+            </div>
+          </div>
         </div>
-      </div>
+      </Link>
 
       {/* Registration Stats Cards */}
       <div>
@@ -119,90 +139,55 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Recent Registrations Table */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-border overflow-hidden">
-          <div className="p-5 border-b border-border flex items-center justify-between">
-            <h2 className="font-bold text-navy text-lg">Recent Registrations</h2>
-            <a href="/admin/registrations" className="text-sm text-gold hover:text-gold-dark font-medium transition-colors">
-              View all &rarr;
-            </a>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left text-navy">
-              <thead className="bg-surface text-slate uppercase text-xs">
-                <tr>
-                  <th className="px-5 py-3 font-medium">Delegate</th>
-                  <th className="px-5 py-3 font-medium">Reg ID</th>
-                  <th className="px-5 py-3 font-medium">Institution</th>
-                  <th className="px-5 py-3 font-medium">Status</th>
-                  <th className="px-5 py-3 font-medium">Date</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {stats.recentRegistrations.length === 0 ? (
-                  <tr>
-                    <td colSpan="5" className="px-5 py-8 text-center text-slate">No registrations yet.</td>
-                  </tr>
-                ) : (
-                  stats.recentRegistrations.map((reg) => (
-                    <tr key={reg._id} className="hover:bg-surface/50 transition-colors">
-                      <td className="px-5 py-4 font-medium">{reg.fullName}</td>
-                      <td className="px-5 py-4 font-mono text-xs">{reg.registrationId}</td>
-                      <td className="px-5 py-4 text-slate">{reg.institution}</td>
-                      <td className="px-5 py-4">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          reg.status === 'payment_verified' ? 'bg-success/10 text-success' :
-                          reg.status === 'payment_pending' ? 'bg-warning/10 text-warning' :
-                          'bg-slate/10 text-slate-dark'
-                        }`}>
-                          {reg.status.replace('_', ' ')}
-                        </span>
-                      </td>
-                      <td className="px-5 py-4 text-slate">
-                        {new Date(reg.createdAt).toLocaleDateString()}
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
+      {/* Recent Registrations Table */}
+      <div className="bg-white rounded-xl border border-border overflow-hidden">
+        <div className="p-5 border-b border-border flex items-center justify-between">
+          <h2 className="font-bold text-navy text-lg">Recent Registrations</h2>
+          <a href="/admin/registrations" className="text-sm text-gold hover:text-gold-dark font-medium transition-colors">
+            View all &rarr;
+          </a>
         </div>
-
-        {/* Top Visited Pages Widget */}
-        <div className="bg-white rounded-xl border border-border p-5">
-          <h2 className="font-bold text-navy text-lg mb-4 flex items-center gap-2">
-            <Globe className="w-4 h-4 text-gold" /> Popular Pages
-          </h2>
-          {(!stats.topPages || stats.topPages.length === 0) ? (
-            <p className="text-slate text-sm py-4 text-center">No visitor data recorded yet.</p>
-          ) : (
-            <div className="space-y-4">
-              {stats.topPages.map((page, index) => {
-                const percentage = Math.round((page.count / maxPageViews) * 100);
-                return (
-                  <div key={index} className="space-y-1">
-                    <div className="flex justify-between text-sm">
-                      <span className="font-mono text-xs text-navy font-semibold truncate max-w-[180px]">
-                        {page.path}
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left text-navy">
+            <thead className="bg-surface text-slate uppercase text-xs">
+              <tr>
+                <th className="px-5 py-3 font-medium">Delegate</th>
+                <th className="px-5 py-3 font-medium">Reg ID</th>
+                <th className="px-5 py-3 font-medium">Institution</th>
+                <th className="px-5 py-3 font-medium">Status</th>
+                <th className="px-5 py-3 font-medium">Date</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {stats.recentRegistrations.length === 0 ? (
+                <tr>
+                  <td colSpan="5" className="px-5 py-8 text-center text-slate">No registrations yet.</td>
+                </tr>
+              ) : (
+                stats.recentRegistrations.map((reg) => (
+                  <tr key={reg._id} className="hover:bg-surface/50 transition-colors">
+                    <td className="px-5 py-4 font-medium">{reg.fullName}</td>
+                    <td className="px-5 py-4 font-mono text-xs">{reg.registrationId}</td>
+                    <td className="px-5 py-4 text-slate">{reg.institution}</td>
+                    <td className="px-5 py-4">
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        reg.status === 'payment_verified' ? 'bg-success/10 text-success' :
+                        reg.status === 'payment_pending' ? 'bg-warning/10 text-warning' :
+                        'bg-slate/10 text-slate-dark'
+                      }`}>
+                        {reg.status.replace('_', ' ')}
                       </span>
-                      <span className="text-slate text-xs font-medium">{page.count} views</span>
-                    </div>
-                    <div className="w-full bg-surface rounded-full h-2 overflow-hidden">
-                      <div 
-                        className="bg-gold h-full rounded-full transition-all duration-500" 
-                        style={{ width: `${percentage}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
+                    </td>
+                    <td className="px-5 py-4 text-slate">
+                      {new Date(reg.createdAt).toLocaleDateString()}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   );
 }
-

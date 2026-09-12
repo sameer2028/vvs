@@ -9,7 +9,8 @@ import {
   X,
   Folder,
   UserCheck,
-  Settings
+  Settings,
+  BarChart3
 } from 'lucide-react';
 import { useState } from 'react';
 import logoImage from '../../assets/favicon.png';
@@ -20,6 +21,7 @@ export default function AdminLayout() {
 
   const navItems = [
     { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
+    { name: 'Analytics', path: '/admin/analytics', icon: BarChart3 },
     { name: 'Registrations', path: '/admin/registrations', icon: Users },
     { name: 'Payments', path: '/admin/payments', icon: CreditCard },
     { name: 'Allocations', path: '/admin/allocations', icon: UserCheck },
