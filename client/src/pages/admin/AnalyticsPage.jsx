@@ -291,7 +291,7 @@ export default function AnalyticsPage() {
       </div>
 
       {/* ─── Daily Trend Chart ──────────────────────── */}
-      <div className="bg-white rounded-xl border border-border p-5 shadow-sm">
+      <div className="bg-white rounded-xl border border-border p-5 shadow-sm" style={{ overflow: 'visible' }}>
         <div className="flex items-center justify-between mb-5">
           <div>
             <h2 className="text-lg font-bold text-navy flex items-center gap-2">
@@ -312,7 +312,7 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        <div className="relative">
+        <div className="relative" style={{ overflow: 'visible' }}>
           {/* Y-axis labels */}
           <div className="absolute left-0 top-0 bottom-6 w-10 flex flex-col justify-between text-[10px] text-slate font-mono">
             <span>{formatNumber(maxDailyViews)}</span>
@@ -321,8 +321,8 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Chart Area */}
-          <div className="ml-12 overflow-x-auto">
-            <div className="flex items-end gap-[3px] min-w-[600px]" style={{ height: '200px' }}>
+          <div className="ml-12 overflow-x-auto overflow-y-visible">
+            <div className="flex items-end gap-[3px] min-w-[600px] relative" style={{ height: '200px', overflow: 'visible' }}>
               {dailyTrend.map((day, i) => {
                 const heightPct = maxDailyViews > 0 ? (day.views / maxDailyViews) * 100 : 0;
                 const uniquePct = maxDailyViews > 0 ? (day.uniqueVisitors / maxDailyViews) * 100 : 0;
@@ -334,10 +334,10 @@ export default function AnalyticsPage() {
                   <div
                     key={i}
                     className="flex-1 flex flex-col items-center gap-0 group relative"
-                    style={{ minWidth: '16px' }}
+                    style={{ minWidth: '16px', overflow: 'visible' }}
                   >
                     {/* Tooltip */}
-                    <div className="absolute bottom-full mb-2 hidden group-hover:block z-20 pointer-events-none">
+                    <div className="absolute bottom-full mb-2 hidden group-hover:block z-50 pointer-events-none" style={{ overflow: 'visible' }}>
                       <div className="bg-navy text-white text-[10px] px-2.5 py-1.5 rounded-lg shadow-lg whitespace-nowrap">
                         <div className="font-semibold">{dayLabel}</div>
                         <div>{day.views} views · {day.uniqueVisitors} unique</div>
