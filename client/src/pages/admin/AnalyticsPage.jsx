@@ -321,8 +321,8 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Chart Area */}
-          <div className="ml-12 overflow-x-auto overflow-y-visible">
-            <div className="flex items-end gap-[3px] min-w-[600px] relative" style={{ height: '200px', overflow: 'visible' }}>
+          <div className="ml-12" style={{ overflow: 'visible' }}>
+            <div className="flex items-end gap-[3px] relative pt-12" style={{ height: '220px', overflow: 'visible' }}>
               {dailyTrend.map((day, i) => {
                 const heightPct = maxDailyViews > 0 ? (day.views / maxDailyViews) * 100 : 0;
                 const uniquePct = maxDailyViews > 0 ? (day.uniqueVisitors / maxDailyViews) * 100 : 0;
@@ -348,9 +348,8 @@ export default function AnalyticsPage() {
                     <div className="w-full flex items-end justify-center gap-[1px]" style={{ height: '180px' }}>
                       {/* Views bar */}
                       <div
-                        className={`flex-1 rounded-t-sm transition-all duration-500 ease-out ${
-                          isToday ? 'bg-gold' : 'bg-gold/60 group-hover:bg-gold'
-                        }`}
+                        className={`flex-1 rounded-t-sm transition-all duration-500 ease-out ${isToday ? 'bg-gold' : 'bg-gold/60 group-hover:bg-gold'
+                          }`}
                         style={{
                           height: `${Math.max(heightPct, day.views > 0 ? 2 : 0)}%`,
                           animationDelay: `${i * 20}ms`,
@@ -409,15 +408,14 @@ export default function AnalyticsPage() {
                     </div>
                   </div>
                   <div
-                    className={`w-full rounded-t-sm transition-all duration-300 ${
-                      isPeak
+                    className={`w-full rounded-t-sm transition-all duration-300 ${isPeak
                         ? 'bg-gold'
                         : pct > 60
-                        ? 'bg-gold/70 group-hover:bg-gold'
-                        : pct > 30
-                        ? 'bg-gold/40 group-hover:bg-gold/60'
-                        : 'bg-gold/15 group-hover:bg-gold/30'
-                    }`}
+                          ? 'bg-gold/70 group-hover:bg-gold'
+                          : pct > 30
+                            ? 'bg-gold/40 group-hover:bg-gold/60'
+                            : 'bg-gold/15 group-hover:bg-gold/30'
+                      }`}
                     style={{
                       height: `${Math.max(pct, h.count > 0 ? 4 : 1)}%`
                     }}
@@ -636,9 +634,8 @@ export default function AnalyticsPage() {
                 className="flex items-center gap-3 py-2.5 group hover:bg-surface/30 -mx-2 px-2 rounded-lg transition-colors"
               >
                 {/* Icon */}
-                <div className={`p-1.5 rounded-lg shrink-0 ${
-                  isMobileUA(event.userAgent) ? 'bg-gold/10 text-gold' : 'bg-navy/10 text-navy'
-                }`}>
+                <div className={`p-1.5 rounded-lg shrink-0 ${isMobileUA(event.userAgent) ? 'bg-gold/10 text-gold' : 'bg-navy/10 text-navy'
+                  }`}>
                   {isMobileUA(event.userAgent) ? (
                     <Smartphone className="w-3.5 h-3.5" />
                   ) : (
