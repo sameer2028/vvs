@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUpRight, Heart } from 'lucide-react';
 import { InstagramIcon as Instagram, WhatsAppIcon } from '../common/SocialIcons';
 import logoImage from '../../assets/favicon.png';
 
@@ -173,6 +173,15 @@ export default function Footer() {
             <p className="text-xs text-white/40">
               26–27 September 2026 • Vasant Kanya Mahavidyalaya, Varanasi
             </p>
+          </div>
+          <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-center gap-1.5">
+            <span className="text-xs text-white/30">Designed by</span>
+            <span className="text-xs text-gold/70 font-medium">Sameer</span>
+            <span className="text-xs text-white/30">with Love for my</span>
+            <Heart
+              size={12}
+              className="text-red-400 fill-red-400 animate-pulse"
+            />
           </div>
         </div>
       </div>
