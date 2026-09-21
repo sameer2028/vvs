@@ -177,7 +177,7 @@ export default function Footer() {
           <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-center gap-1.5">
             <span className="text-xs text-white/30">Designed by</span>
             <span className="text-xs text-gold/70 font-medium">Sameer</span>
-            <span className="text-xs text-white/30">with Love for my</span>
+            <span className="text-xs text-white/30">with Love for </span>
             <Heart
               size={12}
               className="text-red-400 fill-red-400 animate-pulse"
