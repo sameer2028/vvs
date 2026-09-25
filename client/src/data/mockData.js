@@ -8,10 +8,12 @@ export const eventSettings = {
   eventName: 'Vasant Vaani Sansad 2.0',
   tagline: 'Voice • Vision • Victory — A Platform Where Voices Become Leaders.',
   startDate: '2026-09-26',
+  startTime: '09:00',
   endDate: '2026-09-27',
+  endTime: '18:00',
   venue: 'Vasant Kanya Mahavidyalaya, Kammacha, Varanasi',
   registrationFee: 599,
-  registrationOpen: true,
+  registrationOpen: false,
   stats: {
     delegates: 300,
     awards: 40,

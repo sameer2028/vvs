@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logoImage from '../../assets/favicon.png';
+import { eventSettings } from '../../data/mockData';
 
 const navLinks = [
   { label: 'Home', path: '/' },
@@ -22,6 +23,7 @@ export default function Navbar() {
 
   const isHome = location.pathname === '/';
   const isTransparentHero = isHome && !isScrolled;
+  const isRegOpen = eventSettings.registrationOpen;
 
   const handleNavClick = () => {
     setIsOpen(false);
@@ -50,6 +52,7 @@ export default function Navbar() {
           ? 'bg-gradient-to-b from-navy/80 via-navy/40 to-transparent backdrop-blur-[2px]'
           : 'bg-white/95 backdrop-blur-md shadow-[var(--shadow-navbar)] border-b border-border/50'
       }`}
+      style={{ top: 'var(--banner-height, 0px)' }}
     >
       <div className="container-wide mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
@@ -89,18 +92,31 @@ export default function Navbar() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
-            <Link
-              to="/register"
-              onClick={handleNavClick}
-              id="nav-register-btn"
-              className={`px-6 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 active:scale-[0.98] ${
-                 isTransparentHero
-                   ? 'bg-gold text-navy hover:bg-gold-light shadow-[0_2px_12px_rgba(212,175,55,0.4)] font-bold'
-                   : 'bg-navy text-white hover:bg-navy-light shadow-[0_2px_8px_rgba(27,42,74,0.2)]'
-              }`}
-            >
-              Register Now
-            </Link>
+            {isRegOpen ? (
+              <Link
+                to="/register"
+                onClick={handleNavClick}
+                id="nav-register-btn"
+                className={`px-6 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 active:scale-[0.98] ${
+                   isTransparentHero
+                     ? 'bg-gold text-navy hover:bg-gold-light shadow-[0_2px_12px_rgba(212,175,55,0.4)] font-bold'
+                     : 'bg-navy text-white hover:bg-navy-light shadow-[0_2px_8px_rgba(27,42,74,0.2)]'
+                }`}
+              >
+                Register Now
+              </Link>
+            ) : (
+              <span
+                id="nav-register-btn"
+                className={`px-5 py-2.5 text-sm font-semibold rounded-lg cursor-not-allowed select-none ${
+                  isTransparentHero
+                    ? 'bg-white/15 text-white/50 border border-white/20'
+                    : 'bg-surface text-slate border border-border'
+                }`}
+              >
+                Registrations Closed
+              </span>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -158,17 +174,29 @@ export default function Navbar() {
               ))}
 
               <div className={`pt-3 border-t mt-3 space-y-2 ${isTransparentHero ? 'border-white/10' : 'border-border'}`}>
-                <Link
-                  to="/register"
-                  onClick={handleNavClick}
-                  className={`block w-full text-center px-6 py-3 text-sm font-semibold rounded-lg transition-all duration-200 ${
-                    isTransparentHero
-                      ? 'bg-gold text-navy font-bold hover:bg-gold-light shadow-md'
-                      : 'bg-navy text-white hover:bg-navy-light'
-                  }`}
-                >
-                  Register Now
-                </Link>
+                {isRegOpen ? (
+                  <Link
+                    to="/register"
+                    onClick={handleNavClick}
+                    className={`block w-full text-center px-6 py-3 text-sm font-semibold rounded-lg transition-all duration-200 ${
+                      isTransparentHero
+                        ? 'bg-gold text-navy font-bold hover:bg-gold-light shadow-md'
+                        : 'bg-navy text-white hover:bg-navy-light'
+                    }`}
+                  >
+                    Register Now
+                  </Link>
+                ) : (
+                  <span
+                    className={`block w-full text-center px-6 py-3 text-sm font-semibold rounded-lg cursor-not-allowed select-none ${
+                      isTransparentHero
+                        ? 'bg-white/15 text-white/50 border border-white/20'
+                        : 'bg-surface text-slate border border-border'
+                    }`}
+                  >
+                    Registrations Closed
+                  </span>
+                )}
               </div>
             </div>
           </motion.div>

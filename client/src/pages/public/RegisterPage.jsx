@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Landmark, Calendar, MapPin, Award, UserPlus, ExternalLink, CheckCircle2, HelpCircle, Sparkles } from 'lucide-react';
+import { Landmark, Calendar, MapPin, Award, UserPlus, ExternalLink, CheckCircle2, HelpCircle, Sparkles, Lock, ArrowRight } from 'lucide-react';
+import { eventSettings } from '../../data/mockData';
 
 const highlights = [
   {
@@ -144,31 +145,57 @@ export default function RegisterPage() {
             className="max-w-2xl mx-auto bg-white rounded-2xl border border-border p-8 sm:p-12 shadow-xl text-center relative overflow-hidden"
           >
             <div className="w-16 h-16 rounded-full bg-[#0b1a30] text-[#c69a4a] flex items-center justify-center mx-auto mb-5 border border-[#2c72b8]/20">
-              <UserPlus size={28} />
+              {eventSettings.registrationOpen ? <UserPlus size={28} /> : <Lock size={28} />}
             </div>
 
             <h2
               className="text-2xl sm:text-3xl font-bold text-[#14284b] mb-2"
               style={{ fontFamily: 'var(--font-heading, Georgia, serif)' }}
             >
-              Official Delegate Form
+              {eventSettings.registrationOpen ? 'Official Delegate Form' : 'Registrations Closed'}
             </h2>
 
             <div className="w-12 h-0.5 bg-[#c69a4a] rounded-full mx-auto my-3" />
 
-            <p className="text-sm sm:text-base text-slate leading-relaxed max-w-md mx-auto mb-8">
-              Click the button below to fill out the official registration form, select your committee preferences, and reserve your portfolio for VVS 2.0.
-            </p>
+            {eventSettings.registrationOpen ? (
+              <>
+                <p className="text-sm sm:text-base text-slate leading-relaxed max-w-md mx-auto mb-8">
+                  Click the button below to fill out the official registration form, select your committee preferences, and reserve your portfolio for VVS 2.0.
+                </p>
 
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSfYvqGHp7Q5H6o-G_IMFGFFsOFPykCfn5F1Jwn6Xe0Rjyfiqg/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 bg-[#2c72b8] hover:bg-[#14284b] text-white font-bold text-base sm:text-lg rounded-xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto"
-            >
-              Open Registration Form
-              <ExternalLink size={20} />
-            </a>
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSfYvqGHp7Q5H6o-G_IMFGFFsOFPykCfn5F1Jwn6Xe0Rjyfiqg/viewform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 bg-[#2c72b8] hover:bg-[#14284b] text-white font-bold text-base sm:text-lg rounded-xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 w-full sm:w-auto"
+                >
+                  Open Registration Form
+                  <ExternalLink size={20} />
+                </a>
+              </>
+            ) : (
+              <>
+                <p className="text-sm sm:text-base text-slate leading-relaxed max-w-md mx-auto mb-6">
+                  Registration for VVS 2.0 is now closed. Thank you to all who registered! We look forward to seeing all delegates at the conference.
+                </p>
+
+                <div className="inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 bg-slate-100 text-slate border border-border font-bold text-base sm:text-lg rounded-xl cursor-not-allowed select-none w-full sm:w-auto">
+                  <Lock size={18} />
+                  Registrations Closed
+                </div>
+
+                <div className="mt-6 pt-6 border-t border-border">
+                  <p className="text-xs text-slate mb-3">Already registered? Check the schedule:</p>
+                  <a
+                    href="/schedule"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0b1a30] text-white font-semibold text-sm rounded-lg hover:bg-[#14284b] transition-all"
+                  >
+                    View Schedule
+                    <ArrowRight size={16} />
+                  </a>
+                </div>
+              </>
+            )}
 
             {/* Watermark Icon */}
             <div className="absolute -bottom-8 -right-8 text-[#14284b]/5 pointer-events-none">

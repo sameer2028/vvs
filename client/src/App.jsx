@@ -2,6 +2,7 @@ import { Routes, Route, Outlet } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ScrollToTop from './components/common/ScrollToTop';
 import AnalyticsTracker from './components/common/AnalyticsTracker';
+import EventLiveBanner from './components/common/EventLiveBanner';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 

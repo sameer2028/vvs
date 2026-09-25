@@ -1,16 +1,31 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Calendar, MapPin, Download } from 'lucide-react';
+import { ArrowRight, Calendar, MapPin, Radio, Zap } from 'lucide-react';
 import Button from '../common/Button';
 import { eventSettings } from '../../data/mockData';
 import heroBg from '../../assets/hero_bg.png';
 import heroBgMobile from '../../assets/hero-bg-mobile.png';
 
+/**
+ * Determines the event phase based on current time.
+ */
+function getEventPhase() {
+  const now = new Date();
+  const day1Start = new Date('2026-09-26T09:00:00+05:30');
+  const day2Start = new Date('2026-09-27T00:00:00+05:30');
+  const eventEnd = new Date('2026-09-27T23:59:59+05:30');
+
+  if (now < day1Start) return 'pre';
+  if (now >= day1Start && now < day2Start) return 'day1';
+  if (now >= day2Start && now <= eventEnd) return 'day2';
+  return 'post';
+}
+
 function CountdownTimer({ targetDate }) {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    const target = new Date(targetDate).getTime();
+    const target = new Date(`${targetDate}T09:00:00+05:30`).getTime();
     const interval = setInterval(() => {
       const now = Date.now();
       const diff = target - now;
@@ -59,7 +74,81 @@ function CountdownTimer({ targetDate }) {
   );
 }
 
+/** Animated LIVE indicator shown when event is happening */
+function LiveIndicator() {
+  const phase = getEventPhase();
+  const dayLabel = phase === 'day1' ? 'Day 1' : 'Day 2';
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+      className="flex flex-col items-center gap-4"
+    >
+      {/* Pulsing LIVE badge */}
+      <div className="inline-flex items-center gap-2.5 px-5 py-2.5 bg-red-500/20 border border-red-400/40 rounded-full backdrop-blur-md">
+        <span className="relative flex h-3 w-3">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+          <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]" />
+        </span>
+        <span className="text-sm sm:text-base font-bold text-red-400 tracking-widest uppercase">
+          LIVE NOW
+        </span>
+        <Radio size={16} className="text-red-400 animate-pulse" />
+      </div>
+
+      {/* Event day info */}
+      <div className="text-center">
+        <p
+          className="text-2xl sm:text-3xl font-bold text-white drop-shadow-md"
+          style={{ fontFamily: 'var(--font-heading)' }}
+        >
+          <span className="text-gold">{dayLabel}</span> is happening now!
+        </p>
+        <p className="text-sm text-white/60 mt-2 font-medium">
+          Vasant Kanya Mahavidyalaya, Kammacha, Varanasi
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
+/** Post-event thank you state */
+function PostEventBadge() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex flex-col items-center gap-3"
+    >
+      <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold/20 border border-gold/40 rounded-full backdrop-blur-md">
+        <Zap size={16} className="text-gold" />
+        <span className="text-sm font-bold text-gold tracking-widest uppercase">
+          Event Concluded
+        </span>
+      </div>
+      <p className="text-sm text-white/60 font-medium">
+        Thank you to all 300+ delegates for making VVS 2.0 a success!
+      </p>
+    </motion.div>
+  );
+}
+
 export default function HeroSection() {
+  const [phase, setPhase] = useState(getEventPhase);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPhase(getEventPhase());
+    }, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const isLive = phase === 'day1' || phase === 'day2';
+  const isPost = phase === 'post';
+  const showRegistration = eventSettings.registrationOpen && phase === 'pre';
+
   return (
     <>
       <style>{`
@@ -82,6 +171,13 @@ export default function HeroSection() {
         {/* Semi-transparent overlay to ensure text is readable over the image */}
         <div className="absolute inset-0 bg-navy/40 backdrop-blur-[0.5px]" />
 
+        {/* Live event border glow */}
+        {isLive && (
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-red-500/60 to-transparent animate-pulse" />
+          </div>
+        )}
+
         {/* Content */}
         <div className="relative z-10 container-wide mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 lg:pt-28 lg:pb-20">
           <div className="max-w-4xl mx-auto text-center">
@@ -92,10 +188,20 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mb-6"
             >
-              <span className="inline-flex items-center gap-2 px-4.5 py-1.5 bg-[#2c72b8]/30 text-[#93c5fd] border border-[#2c72b8]/70 text-xs sm:text-sm font-bold tracking-[0.18em] uppercase rounded-full shadow-md backdrop-blur-md">
-                <span className="w-2 h-2 rounded-full bg-[#60a5fa] animate-pulse" />
-                26–27 September 2026
-              </span>
+              {isLive ? (
+                <span className="inline-flex items-center gap-2 px-4.5 py-1.5 bg-red-500/20 text-red-300 border border-red-400/50 text-xs sm:text-sm font-bold tracking-[0.18em] uppercase rounded-full shadow-md backdrop-blur-md">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+                  </span>
+                  Happening Now — 26–27 September 2026
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-2 px-4.5 py-1.5 bg-[#2c72b8]/30 text-[#93c5fd] border border-[#2c72b8]/70 text-xs sm:text-sm font-bold tracking-[0.18em] uppercase rounded-full shadow-md backdrop-blur-md">
+                  <span className="w-2 h-2 rounded-full bg-[#60a5fa] animate-pulse" />
+                  26–27 September 2026
+                </span>
+              )}
             </motion.div>
 
             {/* Main Title */}
@@ -158,35 +264,50 @@ export default function HeroSection() {
               </span>
             </motion.div>
 
-            {/* CTAs */}
+            {/* CTAs — Adapt based on event phase */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
               className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
             >
-              <Button to="/register" size="lg" variant="gold" className="font-bold" id="hero-register-btn">
-                Register Now
-                <ArrowRight size={18} />
-              </Button>
+              {showRegistration ? (
+                <Button to="/register" size="lg" variant="gold" className="font-bold" id="hero-register-btn">
+                  Register Now
+                  <ArrowRight size={18} />
+                </Button>
+              ) : (
+                <Button to="/schedule" size="lg" variant="gold" className="font-bold" id="hero-schedule-btn">
+                  {isLive ? 'View Live Schedule' : 'View Schedule'}
+                  <ArrowRight size={18} />
+                </Button>
+              )}
               <Button to="/committees" size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10" id="hero-explore-btn">
                 Explore Committees
               </Button>
             </motion.div>
 
-            {/* Countdown */}
+            {/* Countdown / Live Indicator / Post Event */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
               className="mt-14 pt-10 border-t border-white/15"
             >
-              <p className="text-xs font-medium tracking-[0.2em] uppercase text-gold/80 mb-4">
-                Countdown to VVS 2.0
-              </p>
-              <div className="flex justify-center">
-                <CountdownTimer targetDate={eventSettings.startDate} />
-              </div>
+              {isLive ? (
+                <LiveIndicator />
+              ) : isPost ? (
+                <PostEventBadge />
+              ) : (
+                <>
+                  <p className="text-xs font-medium tracking-[0.2em] uppercase text-gold/80 mb-4">
+                    Countdown to VVS 2.0
+                  </p>
+                  <div className="flex justify-center">
+                    <CountdownTimer targetDate={eventSettings.startDate} />
+                  </div>
+                </>
+              )}
             </motion.div>
           </div>
         </div>

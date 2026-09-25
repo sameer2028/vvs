@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, ArrowUpRight, Heart } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUpRight, Heart, Lock } from 'lucide-react';
 import { InstagramIcon as Instagram, WhatsAppIcon } from '../common/SocialIcons';
 import logoImage from '../../assets/favicon.png';
+import { eventSettings } from '../../data/mockData';
 
 const quickLinks = [
   { label: 'About', path: '/about' },
@@ -149,15 +150,25 @@ export default function Footer() {
             </ul>
 
             <div className="mt-6">
-              <Link
-                to="/register"
-                id="footer-register-btn"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy text-sm font-semibold
-                  rounded-lg hover:bg-gold-light transition-all duration-200"
-              >
-                Register Now
-                <ArrowUpRight size={16} />
-              </Link>
+              {eventSettings.registrationOpen ? (
+                <Link
+                  to="/register"
+                  id="footer-register-btn"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-navy text-sm font-semibold
+                    rounded-lg hover:bg-gold-light transition-all duration-200"
+                >
+                  Register Now
+                  <ArrowUpRight size={16} />
+                </Link>
+              ) : (
+                <span
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 text-white/40 text-sm font-semibold
+                    rounded-lg border border-white/10 cursor-not-allowed select-none"
+                >
+                  <Lock size={14} />
+                  Registrations Closed
+                </span>
+              )}
             </div>
           </div>
         </div>
